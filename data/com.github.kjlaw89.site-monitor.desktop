@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Site Monitor
+Comment=Monitor your websites for uptime
+Icon=com.github.kjlaw89.site-monitor
+Exec=com.github.kjlaw89.site-monitor
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;IDE;Utility;WebDevelopment;Monitor;Security;Profiling
+Keywords=app;web;vala;monitor;watch;performance;historical;uptime;

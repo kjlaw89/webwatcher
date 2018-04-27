@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2018 KJ Lawrence <kjtehprogrammer@gmail.com> -->
+<component type="desktop-application">
+    <id>com.github.kjlaw89.site-monitor</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>GPL-3.0+</project_license>
+    <name>App Template</name>
+    <summary>Template for vala apps</summary>
+    <developer_name>KJ Lawrence</developer_name>
+    <provides>
+        <binary>com.github.kjlaw89.site-monitor</binary>
+    </provides>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/kjlaw89/site-monitor/master/data/images/screenshot.png</image>
+        </screenshot>
+    </screenshots>
+    <description>
+        <p>Monitor your websites to make sure they behave!</p>
+    </description>   
+    <url type="homepage">https://kjlaw89.github.io/site-monitor/</url>
+    <url type="bugtracker">https://github.com/kjlaw89/site-monitor/issues</url>
+    <url type="help">https://github.com/kjlaw89/site-monitor/issues</url>
+    <update_contact>kjtehprogrammer@gmail.com</update_contact>
+    <custom>
+        <value key="x-appcenter-color-primary">#546A79</value>
+        <value key="x-appcenter-color-primary-text">#ECF0F1</value>
+        <value key="x-appcenter-suggested-price">1</value>
+    </custom>
+</component>
