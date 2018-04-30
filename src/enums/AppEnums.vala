@@ -22,11 +22,14 @@ namespace App.Enums {
     public enum SiteEvent {
         ADDED,
         UPDATED,
-        DELETED
+        DELETED,
+        ONLINE,
+        OFFLINE
     }
-	
-	/*public enum MenuItem {
-		NEW,
-		PREFERENCES
-	}*/
+
+    public enum IndicatorEvent {
+        SELECTED,
+        SHOW,
+        QUIT
+    }
 }

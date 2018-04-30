@@ -84,10 +84,9 @@ namespace App {
          * @return {@code void}
          */
         private void build (Gtk.Application app) {
-            var app_view = new AppView (this);
-            new AppController (this, app, app_view);
+            var controller = new AppController (this, app);
 
-            this.add (app_view);
+            this.add (controller.View);
             this.show_all ();
         }
     }

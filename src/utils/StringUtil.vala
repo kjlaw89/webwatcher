@@ -133,5 +133,23 @@ namespace App.Utils {
         public static bool is_not_blank (string? value) {
             return !is_blank (value);
         }
+
+        public static string html_entity_decode (string html) {
+            if (html == null) {
+                return html;
+            }
+
+            var result = html
+                .replace ("&lt;", "<")
+                .replace ("&gt;", ">")
+                .replace ("&amp;", "&")
+                .replace ("&ndash;", "-")
+                .replace ("&middot;", "·")
+                .replace ("&sdot;", "·")
+                .replace ("&quot;", "\"")
+                .replace ("&apos;", "'");
+
+            return result;
+        }
     }
 }

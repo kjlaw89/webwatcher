@@ -14,8 +14,10 @@
 * with this program. If not, see http://www.gnu.org/licenses/.
 */
 
-using App.Widgets;
 using App.Configs;
+using App.Enums;
+using App.Models;
+using App.Widgets;
 
 namespace App.Views {
 
@@ -26,7 +28,7 @@ namespace App.Views {
      */
 	public class SiteFormView : Gtk.Box {
 
-        public signal void submit ();
+        public signal void site_event (SiteModel site, SiteEvent event);
 
         private Gtk.Entry   urlEntry;
         private Gtk.Switch  alertSwitch;
@@ -103,13 +105,16 @@ namespace App.Views {
             }
 
             var model = new App.Models.SiteModel.with_url (this.urlEntry.text, this.alertSwitch.active);
-            model.save ();
+            if (model.save ()) {
+                site_event (model, SiteEvent.ADDED);
+            }
         }
         
         public void clear () {
-            this.urlEntry.text = "";
             this.alertSwitch.active = true;
             this.actionButton.sensitive = false;
+            this.urlEntry.text = "";
+            this.urlEntry.has_focus = true;
         }
 	}
 }

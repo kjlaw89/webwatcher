@@ -18,6 +18,8 @@
 */
 
 using App.Configs;
+using App.Enums;
+using App.Models;
 using App.Utils;
 using App.Views;
 
@@ -31,13 +33,15 @@ namespace App.Widgets {
      */
     public class HeaderBar : Gtk.HeaderBar {
 
-
-        //public signal void item_selected (App.Enums.MenuItem item);
+        public signal void site_event (SiteModel site, SiteEvent event);
+        public signal void back ();
+        public signal void filter (string filter);
         
+        private Gtk.Button         backButton;
         private Views.SiteFormView formView;
-        private Gtk.Button       newButton;
-        private Gtk.Popover     newPopover;
-        private Gtk.SearchEntry  searchEntry;
+        private Gtk.Button         newButton;
+        private Gtk.Popover        newPopover;
+        private Gtk.SearchEntry    searchEntry;
         
 
         /**
@@ -62,15 +66,21 @@ namespace App.Widgets {
             this.newButton = new Gtk.Button.with_mnemonic (_("_New"));
             this.newButton.get_style_context ().add_class ("suggested-action");
             this.newButton.clicked.connect (() => {
-                this.formView.clear ();
                 this.newPopover.show ();
+                this.formView.clear ();
             });
 
-            this.pack_start (this.newButton);
-
+            this.backButton = new Gtk.Button.with_mnemonic (_("_Back"));
+            this.backButton.get_style_context ().add_class ("back-button");
+            this.backButton.clicked.connect (() => {
+                this.back ();
+            });
 
             this.searchEntry = new Gtk.SearchEntry ();
             this.searchEntry.placeholder_text = _("Filter sites...");
+
+            this.pack_start (this.newButton);
+            this.pack_start (this.backButton);
             this.pack_end (this.searchEntry);
 
             this.setup_popover ();
@@ -83,6 +93,11 @@ namespace App.Widgets {
 
             this.formView = new Views.SiteFormView ();
             this.newPopover.add (formView);
+
+            this.formView.site_event.connect ((site, event) => {
+                this.newPopover.hide ();
+                this.site_event (site, event);
+            });
         }
     }
 }

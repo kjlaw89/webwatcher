@@ -10,6 +10,7 @@ sources = files(
     'enums/AppEnums.vala',
 
     'models/BaseModel.vala',
+    'models/ResultModel.vala',
     'models/SiteModel.vala',
 
     'objects/AppObject.vala',
@@ -20,12 +21,15 @@ sources = files(
     'utils/URLUtil.vala',
     'utils/WidgetUtil.vala',
     
+    'views/AppIndicatorView.vala',
     'views/AppView.vala',
     'views/SiteFormView.vala',
     'views/SiteListView.vala',
+    'views/SiteView.vala',
     'views/WelcomeView.vala',
 
     'widgets/HeaderBar.vala',
+    'widgets/IndicatorItem.vala',
     'widgets/SiteItem.vala',
 
     'Application.vala',

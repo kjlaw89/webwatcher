@@ -43,6 +43,7 @@ namespace App {
                 flags: ApplicationFlags.FLAGS_NONE
             );
 
+            Granite.Services.Logger.DisplayLevel = Granite.Services.LogLevel.INFO;
             Granite.Services.Logger.initialize (Constants.PROGRAM_NAME);
         }
 
@@ -58,13 +59,24 @@ namespace App {
                 window = new Window (this);
                 add_window (window);
                 window.show_all ();
+
+                window.delete_event.connect ((event) => {
+                    window.hide_on_delete ();
+                    return true;
+                });
+            }
+            else {
+                window.get_focus ();
+                window.no_show_all = false;
+                window.show_all ();
             }
 
             var quit_action = new SimpleAction ("quit", null);
             quit_action.activate.connect (() => {
-                if (window != null) {
+                /*if (window != null) {
                     window.destroy ();
-                }
+                }*/
+                window.hide ();
             });
 
             add_action (quit_action);

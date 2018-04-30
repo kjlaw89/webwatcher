@@ -27,13 +27,14 @@ namespace App.Views {
      */
 	public class AppView : Gtk.Grid {
 
-        private Gtk.ApplicationWindow app;
-        public HeaderBar headerbar;
-        public Gtk.Stack stack;
-        public Gtk.ScrolledWindow mainContent;
-        public Gtk.ScrolledWindow siteContent;
-        public SiteListView siteListView;
-        public WelcomeView welcomeView;
+        private Gtk.ApplicationWindow   app;
+        private SiteView                activeSiteView;
+        public HeaderBar                headerbar;
+        public Gtk.ScrolledWindow       mainContent;
+        public Gtk.Box                  siteContent;
+        public SiteListView             siteListView;
+        public Gtk.Stack                stack;
+        public WelcomeView              welcomeView;
 
 		/**
          * Constructs a new {@code AppView} object.
@@ -46,6 +47,10 @@ namespace App.Views {
             this.app.resizable = true;
 			
             this.headerbar = new HeaderBar ();
+            this.headerbar.back.connect (() => {
+                this.hideSite ();
+            });
+
             this.app.set_titlebar (this.headerbar);
 
             // Initialize our views first
@@ -58,10 +63,13 @@ namespace App.Views {
             this.add (stack);
             
             this.mainContent = new Gtk.ScrolledWindow (null, null);
-            this.siteContent = new Gtk.ScrolledWindow (null, null);
+            this.siteContent = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            this.siteContent.hexpand = true;
+            this.siteContent.vexpand = true;
 
-            this.stack.add_titled (mainContent, "mainContent", "Main Content");
-            this.stack.add_titled (siteContent, "siteContent", "Site Content");
+            this.stack.add_named (mainContent, "main-content");
+            this.stack.add_named (siteContent, "site-content");
+            this.stack.visible_child_name = "main-content";
             
             showWelcome ();
             showSites ();
@@ -84,6 +92,19 @@ namespace App.Views {
         }
 
         public void showSite (SiteModel site) {
+            this.activeSiteView = new SiteView (site);
+            this.stack.visible_child_name = "site-content";
+
+            this.siteContent.add (this.activeSiteView);
+        }
+
+        public void hideSite () {
+            foreach (var child in this.siteContent.get_children ()) {
+                this.siteContent.remove (child);
+            }
+
+            this.activeSiteView = null;
+            this.stack.visible_child_name = "main-content";
         }
 	}
 }

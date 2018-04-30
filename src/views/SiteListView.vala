@@ -29,35 +29,66 @@ namespace App.Views {
      */
 	public class SiteListView : Gtk.Viewport {
 
+        private Gtk.Label headerLabel;
         private Gtk.Box content;
         private Gee.HashMap<SiteModel, SiteItem> sitesList = new Gee.HashMap<SiteModel, SiteItem> ();
+
+        public signal void site_selected (SiteModel site);
 
 		/**
          * Constructs a new {@code SiteListView} object.
          */
         public SiteListView () {
+            get_style_context ().add_class (Gtk.STYLE_CLASS_VIEW);
+            get_style_context ().add_class (Granite.STYLE_CLASS_WELCOME);
+            
             this.content = new Gtk.Box (Gtk.Orientation.VERTICAL, 10);
 
-            var headerLabel = new Granite.HeaderLabel (_("Monitored sites"));
-            headerLabel.margin_left = 15;
-            headerLabel.get_style_context ().add_class ("h1");
+            this.headerLabel = new Granite.HeaderLabel ("");
+            this.headerLabel.margin_left = 15;
+            this.headerLabel.get_style_context ().add_class ("h1");
 
-            this.content.add (headerLabel);
+            this.content.add (this.headerLabel);
             this.add (this.content);
+            this.update_header ();
         }
 
         public void addSite (SiteModel site) {
             var item = new SiteItem (site);
-            sitesList.set (site, item);
+            item.show_all ();
+            /*item.event.connect ((event) => {
+                warning ("event");
+                if (event.type == Gdk.EventType.BUTTON_RELEASE) {
+                    warning ("active site " + site.url);
+                    this.site_selected (site);
+                }
 
+                return false;
+            });*/
+
+            sitesList.set (site, item);
             this.content.add (item);
+            this.update_header ();
         }
 
         public void removeSite (SiteModel site) {
             var item = sitesList.get (site);
-            sitesList.remove (site);
+            sitesList.unset (site);
 
             this.content.remove (item);
+            this.update_header ();
+        }
+
+        private void update_header () {
+            var text = "";
+            if (this.sitesList.size == 1) {
+                text = "1 " + _("Monitored Site");
+            }
+            else {
+                text = this.sitesList.size.to_string () + " " + _("Monitored Sites");
+            }
+
+            this.headerLabel.label = text;
         }
 	}
 }

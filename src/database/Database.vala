@@ -98,7 +98,8 @@ namespace App.Database {
                         `order`     INTEGER     NOT NULL,
                         status      TEXT        NOT NULL,
                         notify      INTEGER     NOT NULL,
-                        updated_dt  INTEGER     NULL
+                        updated_dt  INTEGER     NULL,
+                        icon_updated_dt INTEGER NULL
                     );
 
                     CREATE INDEX `active` ON `sites` (active);
@@ -111,11 +112,13 @@ namespace App.Database {
 
                 var siteResultSQL = "
                     CREATE TABLE `results` (
-                        id          INTEGER     PRIMARY KEY AUTOINCREMENT,
-                        site_id     INTEGER     NOT NULL,
-                        response    REAL        NOT NULL,
-                        status      TEXT        NOT NULL,
-                        created_dt  INTEGER     NOT NULL
+                        id            INTEGER     PRIMARY KEY AUTOINCREMENT,
+                        site_id       INTEGER     NOT NULL,
+                        response      REAL        NOT NULL,
+                        response_code INTEGER     NOT NULL,
+                        status        TEXT        NOT NULL,
+                        offline       INTEGER     NOT NULL,
+                        created_dt    INTEGER     NOT NULL
                     );
 
                     CREATE INDEX `site_id` ON `results` (site_id);
@@ -128,6 +131,10 @@ namespace App.Database {
 
             var updateSQL = "UPDATE `settings` SET value = '" + App.Configs.Constants.VERSION +"' WHERE key = 'version'";
             this.Execute (updateSQL);
+        }
+
+        public int64 LastID () {
+            return this.db.last_insert_rowid ();
         }
 
         public bool Execute (string query, Sqlite.Callback? callback = null) {
@@ -156,6 +163,8 @@ namespace App.Database {
         public Sqlite.Statement? Prepare (string query, out string? errorMsg = null) {
             Sqlite.Statement statement;
             var result = this.db.prepare_v2 (query, query.length, out statement);
+            errorMsg = "";
+            
             if (result != Sqlite.OK) {
                 warning ("Error querying DB: %d - %s", this.db.errcode (), this.db.errmsg ());
                 errorMsg = this.db.errmsg ();
@@ -172,6 +181,20 @@ namespace App.Database {
 
             if (val != null) {
                 statement.bind_int (pos, val);
+            }
+            else {
+                statement.bind_null (pos);
+            }
+        }
+
+        public void bind_int64 (Sqlite.Statement statement, string name, int64? val = null) {
+            int pos = statement.bind_parameter_index (name);
+            if (pos == 0) {
+                return;
+            }
+
+            if (val != null) {
+                statement.bind_int64 (pos, val);
             }
             else {
                 statement.bind_null (pos);
