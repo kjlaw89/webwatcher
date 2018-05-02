@@ -1,4 +1,4 @@
-project('com.github.kjlaw89.site-monitor', ['vala', 'c'],
+project('com.github.kjlaw89.web-watcher', ['vala', 'c'],
     version : '0.0.1',
     license: 'GPL-3.0'
 )
@@ -7,7 +7,7 @@ gnome = import('gnome')
 i18n = import('i18n')
 
 gresource = gnome.compile_resources(
-    'as-resources', 'data/com.github.kjlaw89.site-monitor.gresource.xml',
+    'as-resources', 'data/com.github.kjlaw89.web-watcher.gresource.xml',
     source_dir: 'data',
     c_name: 'as'
 )
@@ -26,7 +26,7 @@ subdir('data')
 subdir('po')
 subdir('src')
 
-executable('com.github.kjlaw89.site-monitor',
+executable('com.github.kjlaw89.web-watcher',
     sources,
     gresource,
     c_args: c_args,

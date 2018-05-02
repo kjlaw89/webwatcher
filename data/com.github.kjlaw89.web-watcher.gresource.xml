@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+
+	<gresource prefix="/com/github/kjlaw89/web-watcher/css">
+		<file alias="style.css" compressed="true">css/style.css</file>
+	</gresource>
+
+	<gresource prefix="/com/github/web-watcher/images">
+		<file alias="com.github.kjlaw89.web-watcher.svg" compressed="true" preprocess="xml-stripblanks">images/com.github.kjlaw89.web-watcher.svg</file>
+
+		<file alias="16-com.github.kjlaw89.web-watcher.svg" compressed="true" preprocess="xml-stripblanks">images/icons/16/com.github.kjlaw89.web-watcher.svg</file>
+
+		<file alias="24-com.github.kjlaw89.web-watcher.svg" compressed="true" preprocess="xml-stripblanks">images/icons/24/com.github.kjlaw89.web-watcher.svg</file>
+
+		<file alias="32-com.github.kjlaw89.web-watcher.svg" compressed="true" preprocess="xml-stripblanks">images/icons/32/com.github.kjlaw89.web-watcher.svg</file>
+
+		<file alias="48-com.github.kjlaw89.web-watcher.svg" compressed="true" preprocess="xml-stripblanks">images/icons/48/com.github.kjlaw89.web-watcher.svg</file>
+	
+		<file alias="64-com.github.kjlaw89.web-watcher.svg" compressed="true" preprocess="xml-stripblanks">images/icons/64/com.github.kjlaw89.web-watcher.svg</file>
+	
+		<file alias="128-com.github.kjlaw89.web-watcher.svg" compressed="true" preprocess="xml-stripblanks">images/icons/128/com.github.kjlaw89.web-watcher.svg</file>
+	</gresource>
+  
+</gresources>

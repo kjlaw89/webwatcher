@@ -20,10 +20,9 @@
 /*@define-color colorPrimary #546A79;*/
 /*@define-color textColorPrimary #ECF0F1;*/
 
-AppViewsAppView {
-	/*background-color: white;*/
-}
 
 AppViewsSiteListView AppWidgetsSiteItem:not(:last-child) { 
 	border-bottom: 1px solid lightgrey;
 }
+
+AppViewsSiteView > GtkBox { border-bottom: 1px solid #d4d4d4; }

@@ -55,17 +55,6 @@ namespace App {
                 move (x, y);
             }
 
-            style_provider ();
-            build (app);
-        }
-
-        /**
-         * Load the application's CSS.
-         *
-         * @see Apps.Configs.Constants
-         * @return {@code void}
-         */
-        private void style_provider () {
             var css_provider = new Gtk.CssProvider ();
             css_provider.load_from_resource (Constants.URL_CSS);
             
@@ -74,20 +63,8 @@ namespace App {
                 css_provider,
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-        }
-
-        /**
-         * Load classes for application building.
-         *
-         * @see App.Controllers.AppController
-         * @see App.Views.AppView
-         * @return {@code void}
-         */
-        private void build (Gtk.Application app) {
-            var controller = new AppController (this, app);
-
-            this.add (controller.View);
-            this.show_all ();
+            
+            new AppController (this, app);
         }
     }
 }

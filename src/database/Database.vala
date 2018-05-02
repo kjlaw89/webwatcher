@@ -45,10 +45,10 @@ namespace App.Database {
         /**
          * Constructs a new {@code Application} object.
          *
-         * @see Ciano.Configs.Constants
+         * @see web-watcher.Configs.Constants
          */
         private DB () {
-            var dataDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.site-monitor";
+            var dataDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher";
 
             int status = Sqlite.Database.open (dataDir + "/sites.db", out this.db);
             if (status != Sqlite.OK) {

@@ -26,12 +26,6 @@ namespace App.Models {
      */
 	public class ResultModel : BaseModel {
 
-        private int failures = 0;
-        private string _iconDir;
-        private Granite.AsyncImage _iconImage;
-        private bool running = false;
-        private Soup.Session session;
-
         public int id { get; set; }
         public int site_id { get; set; }
         public double response { get; set; default = 0; }

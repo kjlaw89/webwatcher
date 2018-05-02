@@ -30,14 +30,19 @@ namespace App.Views {
 
         public signal void site_event (SiteModel site, SiteEvent event);
 
-        private Gtk.Entry   urlEntry;
+        
+        private Gtk.Switch  activeSwitch;
         private Gtk.Switch  alertSwitch;
         private Gtk.Button  actionButton;
+        private SiteModel   site;
+        private Gtk.Entry   urlEntry;
 
 		/**
          * Constructs a new {@code SiteFormView} object.
          */
-		public SiteFormView () {
+		public SiteFormView (SiteModel? site = null) {
+            this.site = site;
+
             this.urlEntry = new Gtk.Entry ();
             this.urlEntry.hexpand = true;
             this.urlEntry.placeholder_text = _("Site URL");
@@ -58,7 +63,16 @@ namespace App.Views {
             alertLabel.halign = Gtk.Align.END;
             alertLabel.mnemonic_widget = this.alertSwitch;
 
-            this.actionButton = new Gtk.Button.with_mnemonic (_("Monitor Site"));
+            this.activeSwitch = new Gtk.Switch ();
+            this.activeSwitch.halign = Gtk.Align.START;
+            this.activeSwitch.active = true;
+
+            var activeLabel = new Gtk.Label.with_mnemonic (_("Monitoring _Enabled") + ":");
+            activeLabel.halign = Gtk.Align.END;
+            activeLabel.mnemonic_widget = this.activeSwitch;
+
+
+            this.actionButton = new Gtk.Button.with_mnemonic ((this.site != null) ? _("Update _Site") : _("Monitor _Site"));
             this.actionButton.halign = Gtk.Align.END;
             this.actionButton.get_style_context ().add_class ("suggested-action");
             this.actionButton.sensitive = false;
@@ -74,6 +88,12 @@ namespace App.Views {
             grid.attach (urlEntry, 1, 0);
             grid.attach (alertLabel, 0, 1);
             grid.attach (alertSwitch, 1, 1);
+
+            if (site != null) {
+                grid.attach (activeLabel, 0, 2);
+                grid.attach (activeSwitch, 1, 2);
+            }
+
             grid.show_all ();
             
             this.pack_start (grid, true, true, 0);
@@ -104,17 +124,38 @@ namespace App.Views {
                 return;
             }
 
-            var model = new App.Models.SiteModel.with_url (this.urlEntry.text, this.alertSwitch.active);
-            if (model.save ()) {
-                site_event (model, SiteEvent.ADDED);
+            if (this.site != null) {
+                this.site.active = this.activeSwitch.active;
+                this.site.notify = this.alertSwitch.active;
+                this.site.url = this.urlEntry.text;
+                
+                if (this.site.save ()) {
+                    site_event (this.site, SiteEvent.UPDATED);
+                }
+            }
+            else {
+                var model = new App.Models.SiteModel.with_url (this.urlEntry.text, this.alertSwitch.active);
+                if (model.save ()) {
+                    site_event (model, SiteEvent.ADDED);
+                }
             }
         }
         
         public void clear () {
-            this.alertSwitch.active = true;
-            this.actionButton.sensitive = false;
-            this.urlEntry.text = "";
-            this.urlEntry.has_focus = true;
+            if (this.site != null) {
+                this.activeSwitch.active = this.site.active;
+                this.alertSwitch.active = this.site.notify;
+                this.actionButton.sensitive = true;
+                this.urlEntry.text = this.site.url;
+            }
+            else {
+                this.activeSwitch.active = true;
+                this.alertSwitch.active = true;
+                this.actionButton.sensitive = false;
+                this.urlEntry.text = "";
+                this.urlEntry.has_focus = true;
+            }
+            
         }
 	}
 }

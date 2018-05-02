@@ -37,8 +37,10 @@ namespace App.Controllers {
         private AppIndicator.Indicator indicator;
         private AppIndicatorView    indicatorView;
         private Unity.LauncherEntry launcherEntry;
-        private int                 offlineCount;
+        private int                 offlineCount = 0;
+        private App.Configs.Settings  settings;
         private HashSet<SiteModel>  sites = new HashSet<SiteModel> ();
+        private Gtk.ApplicationWindow window;
 
         public AppView View { get { return appView; } }
 
@@ -46,9 +48,10 @@ namespace App.Controllers {
          * Constructs a new {@code AppController} object.
          */
 		public AppController (Gtk.ApplicationWindow window, Gtk.Application application) {
-            this.offlineCount = 0;
+            this.settings = App.Configs.Settings.get_instance ();
+            this.window = window;
 
-            var dataDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.site-monitor";
+            var dataDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher";
             var dir = File.new_for_path (dataDir);
             if (!dir.query_exists ()) {
                 try { dir.make_directory (); }
@@ -68,6 +71,7 @@ namespace App.Controllers {
             // Initialize our application view
             this.application = application;
             this.appView = new AppView (window);
+            this.window.add (this.appView);
 
             // Setup our App Indicator
             this.indicator = new AppIndicator.Indicator (Constants.ID, "applications-internet-symbolic", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
@@ -77,8 +81,9 @@ namespace App.Controllers {
             
             // Initialize our database and get a list of active locations
             this.database = DB.GetInstance ();
-            var statement = this.database.Prepare ("SELECT id FROM `sites` WHERE active = 1 ORDER BY `order` ASC");
+            var statement = this.database.Prepare ("SELECT id FROM `sites` ORDER BY `order` ASC");
 
+            var count = 0;
             while (statement.step () == Sqlite.ROW) {
                 var site = new SiteModel ();
 
@@ -94,8 +99,47 @@ namespace App.Controllers {
                         this.offlineCount++;
                     }
                 }
+
+                count++;
             }
 
+            if (count == 0) {
+                this.View.show_welcome ();
+                this.window.show_all ();
+            }
+            else {
+                this.View.show_sites ();
+                this.window.hide ();
+            }
+            
+            // Handle events to the sites
+            this.View.site_event.connect ((site, event) => {
+                switch (event) {
+                    case SiteEvent.ADDED:
+                        if (count == 0) {
+                            this.View.show_sites ();
+                            count++;
+                        }
+
+                        sites.add (site);
+                        this.View.siteListView.addSite (site);
+                        break;
+                }
+            });
+
+            // Setup our launcher entry events
+            this.launcherEntry = Unity.LauncherEntry.get_for_desktop_id (Constants.ID + ".desktop");
+            this.launcherEntry.count_visible = this.offlineCount > 0;
+            this.launcherEntry.count = this.offlineCount;
+
+            // Setup our accelerators
+            this.setup_accelerators ();
+
+            // Initializes our timer to update each site once a second.
+            // Each site can determine if it needs to run or not,
+            // buy by default each site will run once a minute.
+            // If the site enters a warning/error state it will
+            // attempt update every 10 seconds.
             Timeout.add_seconds_full (1, 1, () => {
                 foreach (var site in sites) {
                     site.run ();
@@ -103,20 +147,6 @@ namespace App.Controllers {
 
                 return true;
             });
-            
-            this.appView.headerbar.site_event.connect ((site, event) => {
-                switch (event) {
-                    case SiteEvent.ADDED:
-                        sites.add (site);
-                        this.appView.siteListView.addSite (site);
-                        break;
-                }
-            });
-
-            // If we have offline sites at this point, update our badge
-            this.launcherEntry = Unity.LauncherEntry.get_for_desktop_id (Constants.ID + ".desktop");
-            this.launcherEntry.count_visible = this.offlineCount > 0;
-            this.launcherEntry.count = this.offlineCount;
         }
         
         private void site_status_changed (SiteModel site, SiteEvent status) {
@@ -160,6 +190,28 @@ namespace App.Controllers {
                     application.quit ();
                     break;
             }
+        }
+
+        private void setup_accelerators () {
+            var quit_action = new SimpleAction ("quit", null);
+            quit_action.activate.connect (() => {
+                this.settings.save_window_pos (this.window);
+
+                if (this.window != null) {
+                    this.window.destroy ();
+                }
+            });
+
+            var find_action = new SimpleAction ("find", null);
+            find_action.activate.connect (() => {
+                this.appView.headerbar.search ();
+            });
+
+            this.application.add_action (find_action);
+            this.application.add_action (quit_action);
+            
+            this.application.add_accelerator ("<Control>f", "app.find", null);
+            this.application.add_accelerator ("<Control>q", "app.quit", null);
         }
 	}
 }

@@ -49,8 +49,8 @@ namespace App.Configs {
          * Constructs a new {@code Settings} object 
          * and sets the default exit folder.
          * 
-         * @see Ciano.Utils.StringUtil#is_empty(string)
-         * @see Ciano.Constants
+         * @see web-watcher.Utils.StringUtil#is_empty(string)
+         * @see web-watcher.Constants
          */
         private Settings () {
             base (Constants.ID);
@@ -67,6 +67,15 @@ namespace App.Configs {
             }
 
             return instance;
+        }
+
+        public void save_window_pos (Gtk.Window window) {
+            int x;
+            int y;
+            window.get_position (out x, out y);
+
+            window_x = x;
+            window_y = y;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace App.Models {
 	public class SiteModel : BaseModel {
 
         private int failures = 0;
+        private bool fetching_icon = false;
         private string _iconDir;
         private Granite.AsyncImage _iconImage;
         private bool running = false;
@@ -55,8 +56,9 @@ namespace App.Models {
             session = new Soup.Session ();
             session.timeout = 60;
             session.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36";
+            session.ssl_strict = false;
 
-            _iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.site-monitor/icons/";
+            _iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher/icons/";
             _iconImage = new Granite.AsyncImage ();
         }
 
@@ -67,8 +69,9 @@ namespace App.Models {
             session = new Soup.Session ();
             session.timeout = 60;
             session.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36";
+            session.ssl_strict = false;
 
-            _iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.site-monitor/icons/";
+            _iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher/icons/";
             _iconImage = new Granite.AsyncImage ();
         }
 
@@ -152,6 +155,7 @@ namespace App.Models {
                 state = SiteEvent.UPDATED;
                 sql = "
                     UPDATE `sites` SET
+                        `url` = $URL,
                         `description` = $DESCRIPTION,
                         `title` = $TITLE,
                         `icon` = $ICON,
@@ -215,6 +219,11 @@ namespace App.Models {
                 return;
             }
 
+            if (!this.active) {
+                this.running = false;
+                return;
+            }
+
             var time = (new DateTime.now_utc ()).to_unix ();
             if (this.status == "good" && time - this.updated_dt < 60) {
                 return;
@@ -225,7 +234,7 @@ namespace App.Models {
 
             this.running = true;
 
-            var titleRegex = new Regex ("""\<title\>(.+)\<\/title\>""");
+            var titleRegex = new Regex ("""\<title[a-z \-]*\>(.+)\<\/title\>""", RegexCompileFlags.CASELESS);
             var message = new Soup.Message ("GET", this.url);
             var timer = new Timer ();
             session.queue_message (message, (ses, response) => {
@@ -234,6 +243,9 @@ namespace App.Models {
                 var currentTime = (new DateTime.now_utc ()).to_unix ();
                 var data = (string) response.response_body.data ?? "";
                 var statusCode = response.status_code;
+
+                // Timer is in seconds - multiple by 1000 to get MS, the cast to int to drop remainder
+                this.response = (int)(timer.elapsed () * 1000);
 
                 // Update the status based on the status code value (200 is usually expected)
                 if (statusCode >= 200 && statusCode < 300 && this.response < 30000) {
@@ -270,35 +282,40 @@ namespace App.Models {
                     this.status_changed (this, SiteEvent.OFFLINE);
                 }
 
-                // Timer is in seconds - multiple by 1000 to get MS, the cast to int to drop remainder
-                this.response = (int)(timer.elapsed () * 1000);
-
                 // Attempt to parse out <title> tag
                 MatchInfo match;
                 if (titleRegex.match (data, 0, out match)) {
                     this.title = App.Utils.StringUtil.html_entity_decode (match.fetch (1) ?? "").strip ();
                 }
 
-                this.running = false;
-                this.save ();
-
                 new ResultModel.with_details (this.id, this.response, (int)statusCode, this.status);
+
+                this.running = false;
+                this.save ();                
 
                 // If everything is good and the last time we updated the icon was more than 5 minutes ago, fetch a new icon
                 if (this.status == "good" && currentTime - this.icon_updated_dt > 300) {
-                    info ("Fetching updated icon for " + this.url);
+                    this.fetching_icon = false;  // if it's still running after 5 minutes just let it run again
                     this.fetch_icon ();
                 }
             });
         }
 
         public void fetch_icon () {
+            if (this.fetching_icon) {
+                return;
+            }
+            
+            info ("Fetching updated icon for " + this.url);
+            this.fetching_icon = true;
+            
             var currentTime = (new DateTime.now_utc ()).to_unix ();
             var message = new Soup.Message ("GET", "https://favicongrabber.com/api/grab/" + this.url.replace ("http://", "").replace ("https://", ""));
 
             session.queue_message (message, (ses, response) => {
                 try {
                     if (response.status_code > 200) {
+                        this.fetching_icon = false;
                         this.icon_updated_dt = currentTime - 60; // try again in a minute
                         this.save ();
                         return;
@@ -308,6 +325,7 @@ namespace App.Models {
                     var obj = node.get_object ();
 
                     if (obj.has_member ("error")) {
+                        this.fetching_icon = false;
                         this.icon_updated_dt = currentTime;
                         this.save ();
                         return;
@@ -359,6 +377,7 @@ namespace App.Models {
 
         public void download_icon (string url) {
             if (url == null || url == "") {
+                this.fetching_icon = false;
                 this.icon_updated_dt = (new DateTime.now_utc ()).to_unix ();
                 this.save ();
                 return;
@@ -372,6 +391,7 @@ namespace App.Models {
 
             session.queue_message (message, (ses, response) => {
                 if (response.status_code > 200) {
+                    this.fetching_icon = false;
                     this.icon_updated_dt = currentTime - 60; // try again in a minute
                     this.save ();
                     return;
@@ -389,6 +409,8 @@ namespace App.Models {
                         written += dataOutputStream.write (data[written:data.length]);
                     }
 
+                    this.fetching_icon = false;
+
                     this.icon = name;
                     this.icon_updated_dt = (new DateTime.now_utc ()).to_unix ();
                     this.save ();
@@ -400,8 +422,8 @@ namespace App.Models {
         }
 
         private void update_icon () {
-            var iconFile = File.new_for_path (this._iconDir + this.icon);
-            if (this.icon != null && iconFile.query_exists ()) {
+            var iconFile = this.get_icon_file ();
+            if (iconFile != null) {
                 this._iconImage.set_from_file_async (iconFile, 32, 32, true);
             }
             else {
@@ -411,6 +433,19 @@ namespace App.Models {
 
         public Granite.AsyncImage get_icon_image () {
             return this._iconImage;
+        }
+
+        public File? get_icon_file () {
+            if (this.icon == null) {
+                return null;
+            }
+
+            var iconFile = File.new_for_path (this._iconDir + this.icon);
+            if (iconFile.query_exists ()) {
+                return iconFile;
+            }
+
+            return null;
         }
 	}
 

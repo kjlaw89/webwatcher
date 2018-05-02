@@ -15,6 +15,7 @@
 */
 
 using App.Configs;
+using App.Enums;
 using App.Models;
 using App.Widgets;
 
@@ -36,6 +37,8 @@ namespace App.Views {
         public Gtk.Stack                stack;
         public WelcomeView              welcomeView;
 
+        public signal void site_event (SiteModel site, SiteEvent event);
+
 		/**
          * Constructs a new {@code AppView} object.
          */
@@ -47,8 +50,13 @@ namespace App.Views {
             this.app.resizable = true;
 			
             this.headerbar = new HeaderBar ();
+            this.headerbar.site_event.connect ((site, event) => { this.site_event (site, event); });
             this.headerbar.back.connect (() => {
-                this.hideSite ();
+                this.hide_site ();
+            });
+
+            this.headerbar.filter.connect ((filter) => {
+                this.siteListView.filter (filter);
             });
 
             this.app.set_titlebar (this.headerbar);
@@ -56,6 +64,9 @@ namespace App.Views {
             // Initialize our views first
             this.welcomeView = new WelcomeView ();
             this.siteListView = new SiteListView ();
+            this.siteListView.site_selected.connect ((site) => {
+                this.show_site (site);
+            });
 
             // Initialize our control view
             this.stack = new Gtk.Stack ();
@@ -70,41 +81,42 @@ namespace App.Views {
             this.stack.add_named (mainContent, "main-content");
             this.stack.add_named (siteContent, "site-content");
             this.stack.visible_child_name = "main-content";
-            
-            showWelcome ();
-            showSites ();
         }
         
-        public void showWelcome () {
+        public void show_welcome () {
             foreach (var child in mainContent.get_children ()) {
                 mainContent.remove (child);
             }
             
             mainContent.add (this.welcomeView);
+            mainContent.show_all ();
         }
 
-        public void showSites () {
+        public void show_sites () {
             foreach (var child in mainContent.get_children ()) {
                 mainContent.remove (child);
             }
 
             mainContent.add (this.siteListView);
+            mainContent.show_all ();
         }
 
-        public void showSite (SiteModel site) {
+        public void show_site (SiteModel site) {
             this.activeSiteView = new SiteView (site);
             this.stack.visible_child_name = "site-content";
 
             this.siteContent.add (this.activeSiteView);
+            this.headerbar.show_back ();
         }
 
-        public void hideSite () {
+        public void hide_site () {
             foreach (var child in this.siteContent.get_children ()) {
                 this.siteContent.remove (child);
             }
 
             this.activeSiteView = null;
             this.stack.visible_child_name = "main-content";
+            this.headerbar.hide_back ();
         }
 	}
 }

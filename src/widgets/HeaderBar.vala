@@ -38,6 +38,7 @@ namespace App.Widgets {
         public signal void filter (string filter);
         
         private Gtk.Button         backButton;
+        private Gtk.Box            buttonBox;
         private Views.SiteFormView formView;
         private Gtk.Button         newButton;
         private Gtk.Popover        newPopover;
@@ -73,31 +74,65 @@ namespace App.Widgets {
             this.backButton = new Gtk.Button.with_mnemonic (_("_Back"));
             this.backButton.get_style_context ().add_class ("back-button");
             this.backButton.clicked.connect (() => {
+                this.hide_back ();
                 this.back ();
             });
+            
 
             this.searchEntry = new Gtk.SearchEntry ();
             this.searchEntry.placeholder_text = _("Filter sites...");
+            this.searchEntry.search_changed.connect (() => {
+                this.filter (this.searchEntry.text);
+            });
 
-            this.pack_start (this.newButton);
-            this.pack_start (this.backButton);
+            buttonBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            buttonBox.add (this.newButton);
+
+            this.pack_start (buttonBox);
             this.pack_end (this.searchEntry);
 
             this.setup_popover ();
         }
 
         private void setup_popover () {
-            this.newPopover = new Gtk.Popover (this.newButton);
-            this.newPopover.set_size_request (450, 150);
-            this.newPopover.modal = true;
-
             this.formView = new Views.SiteFormView ();
-            this.newPopover.add (formView);
-
             this.formView.site_event.connect ((site, event) => {
                 this.newPopover.hide ();
                 this.site_event (site, event);
             });
+
+            this.newPopover = new Gtk.Popover (this.newButton);
+            this.newPopover.set_size_request (450, 150);
+            this.newPopover.modal = true;
+            this.newPopover.add (formView);
+        }
+
+        public void show_back () {
+            foreach (var child in this.buttonBox.get_children ()) {
+                this.buttonBox.remove (child);
+            }
+
+            this.buttonBox.add (this.backButton);
+            this.buttonBox.show_all ();
+            this.searchEntry.sensitive = false;
+        }
+
+        public void hide_back () {
+            foreach (var child in this.buttonBox.get_children ()) {
+                this.buttonBox.remove (child);
+            }
+
+            this.buttonBox.add (this.newButton);
+            this.buttonBox.show_all ();
+            this.searchEntry.sensitive = true;
+        }
+
+        public void search () {
+            if (!this.searchEntry.sensitive) {
+                return;
+            }
+
+            this.searchEntry.has_focus = true;
         }
     }
 }

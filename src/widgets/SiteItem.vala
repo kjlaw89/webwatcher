@@ -30,31 +30,27 @@ namespace App.Widgets {
      * @see Gtk.Grid
      * @since 0.0.1
      */
-    public class SiteItem : Gtk.Grid {
+    public class SiteItem : Gtk.EventBox {
 
-        private SiteModel _site;
         private string    _iconDir;
-        private string    iconURL;
+        private SiteModel _site;
 
+        private Gtk.Grid  grid;
+        private Gtk.Label lastUpdateLabel;
+        private Gtk.Image nextImage;
+        private Gtk.Label responseLabel;
+        private Gtk.Image statusImage;
         private Gtk.Label titleLabel;
         private Gtk.Label urlLabel;
-        private Gtk.Label responseLabel;
-        private Gtk.Label lastUpdateLabel;
-        private Gtk.Image statusImage;
-        private Gtk.Image nextImage;
-
+        
         public SiteModel Site { get { return _site; } }
         
-
         /**
          * Constructs a new {@code Toolbar} object.
          */
         public SiteItem (SiteModel site) {
-            this._iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.site-monitor/icons/";
+            this._iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher/icons/";
             this._site = site;
-            
-            this.set_row_baseline_position (0, Gtk.BaselinePosition.CENTER);
-            this.height_request = 50;
 
             this.titleLabel = new Gtk.Label (null);
             this.titleLabel.halign = Gtk.Align.START;
@@ -73,7 +69,7 @@ namespace App.Widgets {
             var imageBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             imageBox.margin_left = 10;
             imageBox.valign = Gtk.Align.CENTER;
-            imageBox.width_request = 32;
+            imageBox.width_request = 28;
             imageBox.add (Site.get_icon_image ());
 
             var textBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -95,10 +91,14 @@ namespace App.Widgets {
             statusGrid.attach (statusBox, 1, 0);
             statusGrid.attach (nextImage, 2, 0);
 
-            this.attach (imageBox, 0, 0);
-            this.attach (textBox, 1, 0);
-            this.attach (statusGrid, 2, 0, 4);
-            this.column_spacing = 10;
+            this.grid = new Gtk.Grid ();
+            this.grid.attach (imageBox, 0, 0);
+            this.grid.attach (textBox, 1, 0);
+            this.grid.attach (statusGrid, 2, 0, 4);
+            this.grid.column_spacing = 10;
+            this.grid.set_row_baseline_position (0, Gtk.BaselinePosition.CENTER);
+            this.grid.height_request = 50;
+            this.add (this.grid);
 
             this.update ();
             site.changed.connect ((site, event) => {
@@ -109,23 +109,12 @@ namespace App.Widgets {
                 this.refreshTime ();
                 return true;
             });
-
-            
-            this.event.connect ((event) => {
-                warning ("event");
-                if (event.type == Gdk.EventType.BUTTON_RELEASE) {
-                    warning ("active site " + site.url);
-                    //this.site_selected (site);
-                }
-
-                return false;
-            });
         }
 
         public void update () {
             var title = Site.title ?? "--";
-            if (title.length > 40) {
-                title = title.substring (0, 40) + "...";
+            if (title.length > 35) {
+                title = title.substring (0, 35) + "...";
             }
 
             this.titleLabel.label = title;
@@ -151,6 +140,8 @@ namespace App.Widgets {
             if (Site.status == "good") {
                 this.responseLabel.label = Site.response.to_string () + "ms";
             }
+
+            this.grid.opacity = (!Site.active) ? 0.5f : 1;
 
             this.refreshTime ();
         }

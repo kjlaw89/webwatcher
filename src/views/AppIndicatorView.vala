@@ -50,7 +50,6 @@ namespace App.Views {
             });
 
             item.activate.connect (() => {
-                warning ("item selected!");
                 this.menu_event (item.Site, IndicatorEvent.SELECTED);
             });
 
@@ -59,7 +58,6 @@ namespace App.Views {
         }
 
         public void removeSite (SiteModel site) {
-            var item = sitesList.get (site);
             sitesList.unset (site);
 
             build_menu ();
@@ -91,7 +89,7 @@ namespace App.Views {
             }
             
         
-            var showItem = new Gtk.MenuItem.with_label (_("Show Site Monitor"));
+            var showItem = new Gtk.MenuItem.with_label (_("Show Web Watcher"));
             showItem.activate.connect (() => {
                 this.menu_event (null, IndicatorEvent.SHOW);
             });

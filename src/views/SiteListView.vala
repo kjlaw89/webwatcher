@@ -56,19 +56,20 @@ namespace App.Views {
         public void addSite (SiteModel site) {
             var item = new SiteItem (site);
             item.show_all ();
-            /*item.event.connect ((event) => {
-                warning ("event");
+            item.event.connect ((event) => {
                 if (event.type == Gdk.EventType.BUTTON_RELEASE) {
-                    warning ("active site " + site.url);
                     this.site_selected (site);
                 }
 
                 return false;
-            });*/
+            });
 
             sitesList.set (site, item);
             this.content.add (item);
             this.update_header ();
+
+            Gtk.StyleContext.reset_widgets (get_style_context ().screen);
+            
         }
 
         public void removeSite (SiteModel site) {
@@ -77,6 +78,8 @@ namespace App.Views {
 
             this.content.remove (item);
             this.update_header ();
+            
+            Gtk.StyleContext.reset_widgets (get_style_context ().screen);
         }
 
         private void update_header () {
@@ -89,6 +92,36 @@ namespace App.Views {
             }
 
             this.headerLabel.label = text;
+        }
+
+        public void filter (string filter) {
+            foreach (var child in this.content.get_children ()) {
+                this.content.remove (child);
+            }
+
+            if (filter == null || filter == "") {
+                this.content.add (this.headerLabel);
+
+                foreach (var entry in sitesList.entries) {
+                    this.content.add (entry.value);
+                }
+
+                Gtk.StyleContext.reset_widgets (get_style_context ().screen);
+                return;
+            }
+
+            foreach (var entry in sitesList.entries) {
+                var title = entry.key.title ?? "";
+                var url = entry.key.url;
+
+                if (title.index_of (filter) == -1 && url.index_of (filter) == -1) {
+                    continue;
+                }
+
+                this.content.add (entry.value);
+            }
+
+            Gtk.StyleContext.reset_widgets (get_style_context ().screen);
         }
 	}
 }

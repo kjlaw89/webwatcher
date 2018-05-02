@@ -30,12 +30,12 @@ namespace App {
      */
     public class Application : Granite.Application {
 
-        private Window window { get; private set; default = null; }
+        public Window window { get; private set; default = null; }
 
         /**
          * Constructs a new {@code Application} object.
          *
-         * @see Ciano.Configs.Constants
+         * @see web-watcher.Configs.Constants
          */
         public Application () {
             Object (
@@ -55,32 +55,31 @@ namespace App {
          * @return {@code void}
          */
         public override void activate () {
+            var settings = App.Configs.Settings.get_instance ();
+
             if (window == null) {
                 window = new Window (this);
                 add_window (window);
-                window.show_all ();
 
                 window.delete_event.connect ((event) => {
+                    settings.save_window_pos (window);
                     window.hide_on_delete ();
                     return true;
                 });
-            }
-            else {
-                window.get_focus ();
-                window.no_show_all = false;
-                window.show_all ();
+
+                return;
             }
 
-            var quit_action = new SimpleAction ("quit", null);
-            quit_action.activate.connect (() => {
-                /*if (window != null) {
-                    window.destroy ();
-                }*/
-                window.hide ();
-            });
+            int x = settings.window_x;
+            int y = settings.window_y;
 
-            add_action (quit_action);
-            add_accelerator ("<Control>q", "app.quit", null);
+            if (x != -1 && y != -1) {
+                window.move (x, y);
+            }
+            
+            window.get_focus ();
+            window.no_show_all = false;
+            window.show_all ();
         }
     }
 }

@@ -13,8 +13,6 @@ sources = files(
     'models/ResultModel.vala',
     'models/SiteModel.vala',
 
-    'objects/AppObject.vala',
-
     'utils/FileUtil.vala',
     'utils/StringUtil.vala',
     'utils/TimeUtil.vala',
