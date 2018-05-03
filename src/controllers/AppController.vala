@@ -110,6 +110,7 @@ namespace App.Controllers {
             else {
                 this.View.show_sites ();
                 this.window.hide ();
+                this.window.deiconify ();
             }
             
             // Handle events to the sites

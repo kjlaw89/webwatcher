@@ -19,9 +19,22 @@
 </p>
 
 <p align="center">
-    <img  src="https://github.com/kjlaw89/web-watcher/master/data/images/screenshot.png" alt="Screenshot"> <br>
-  <a href="https://github.com/kjlaw89/web-watcher/issues/new"> Report a problem! </a>
+    <img  src="https://github.com/kjlaw89/web-watcher/master/data/images/screenshot1.png" alt="Screenshot 1"> <br>
+    <img  src="https://github.com/kjlaw89/web-watcher/master/data/images/screenshot2.png" alt="Screenshot 1"> <br>
+    <a href="https://github.com/kjlaw89/web-watcher/issues/new"> Report a problem! </a>
 </p>
+
+## Features
+
+* Easily add as many sites as you wish to monitor
+* All sites are checked every minute
+* Extra meta-data (title and icon) are automatically grabbed
+* Get a notification if a site goes down or comes back up
+* View all historical data for the past 2 hours (with eventual capabilities to export all data)
+* Does not require an external service (uses local network to check sites)
+* Runs in background automatically once started via System tray indicator
+
+<hr />
 
 ## Installation
 
@@ -32,8 +45,10 @@ These dependencies must be present before building
  - `debhelper (>= 9)`
  - `libgranite-dev`
  - `libgtk-3-dev`
+ - `sqlite3-dev`
+ - `unity-dev`
+ - `appindicator3-0.1-dev`
 
- 
  ### Building
 
 ```
