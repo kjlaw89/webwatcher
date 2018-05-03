@@ -1,5 +1,5 @@
 <div align="center">
-  <span align="center"> <img width="80" height="70" class="center" src="https://github.com/kjlaw89/web-watcher/master/data/images/com.github.kjlaw89.web-watcher.png" alt="Icon"></span>
+  <span align="center"> <img width="80" height="70" class="center" src="https://github.com/kjlaw89/web-watcher/blob/master/data/images/com.github.kjlaw89.web-watcher.png" alt="Icon"></span>
   <h1 align="center">Web Watcher</h1>
   <h3 align="center">Know when your websites are misbehaving!</h3>
 </div>
@@ -19,8 +19,8 @@
 </p>
 
 <p align="center">
-    <img  src="https://github.com/kjlaw89/web-watcher/master/data/images/screenshot1.png" alt="Screenshot 1"> <br>
-    <img  src="https://github.com/kjlaw89/web-watcher/master/data/images/screenshot2.png" alt="Screenshot 1"> <br>
+    <img  src="https://github.com/kjlaw89/web-watcher/blob/master/data/images/screenshot1.png" alt="Screenshot 1"> <br>
+    <img  src="https://github.com/kjlaw89/web-watcher/blob/master/data/images/screenshot2.png" alt="Screenshot 1"> <br>
     <a href="https://github.com/kjlaw89/web-watcher/issues/new"> Report a problem! </a>
 </p>
 
