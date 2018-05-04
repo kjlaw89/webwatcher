@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2017 KJ Lawrence <kjtehprogrammer@gmail.com>
+* Copyright (c) 2018 KJ Lawrence <kjtehprogrammer@gmail.com>
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -35,7 +35,7 @@ namespace App {
         /**
          * Constructs a new {@code Application} object.
          *
-         * @see web-watcher.Configs.Constants
+         * @see webwatcher.Configs.Constants
          */
         public Application () {
             Object (

@@ -51,7 +51,7 @@ namespace App.Controllers {
             this.settings = App.Configs.Settings.get_instance ();
             this.window = window;
 
-            var dataDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher";
+            var dataDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.webwatcher";
             var dir = File.new_for_path (dataDir);
             if (!dir.query_exists ()) {
                 try { dir.make_directory (); }

@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Web Watcher
-Comment=Monitor your websites for uptime
-Icon=com.github.kjlaw89.web-watcher
-Exec=com.github.kjlaw89.web-watcher
+Comment=Know when your websites are misbehaving!
+Icon=com.github.kjlaw89.webwatcher
+Exec=com.github.kjlaw89.webwatcher
 Terminal=false
 Type=Application
 StartupNotify=true

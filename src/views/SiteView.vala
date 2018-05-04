@@ -54,7 +54,7 @@ namespace App.Views {
         public SiteView (SiteModel site) {
             this.orientation = Gtk.Orientation.VERTICAL;
 
-            this._iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher/icons/";
+            this._iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.webwatcher/icons/";
             this._site = site;
 
             this.titleLabel = new Gtk.Label (null);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
 
-	<schema id="com.github.kjlaw89.web-watcher" path="/com/github/kjlaw89/web-watcher/">
+	<schema id="com.github.kjlaw89.webwatcher" path="/com/github/kjlaw89/web-watcher/">
 		<key name="window-x" type="i">
 			<default>-1</default>
 			<summary>Most recent x position of Web Watcher</summary>

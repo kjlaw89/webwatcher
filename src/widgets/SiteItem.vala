@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2017 KJ Lawrence <kjtehprogrammer@gmail.com>
+* Copyright (c) 2018 KJ Lawrence <kjtehprogrammer@gmail.com>
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -49,7 +49,7 @@ namespace App.Widgets {
          * Constructs a new {@code Toolbar} object.
          */
         public SiteItem (SiteModel site) {
-            this._iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher/icons/";
+            this._iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.webwatcher/icons/";
             this._site = site;
 
             this.titleLabel = new Gtk.Label (null);
