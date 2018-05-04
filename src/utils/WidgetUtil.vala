@@ -22,7 +22,7 @@ namespace App.Utils {
     /**
      * The {@code WidgetUtil} class is responsible for customizing widget actions.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class WidgetUtil {
 

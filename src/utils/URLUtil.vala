@@ -22,7 +22,7 @@ namespace App.Utils {
 	/**
      * The {@code URLUtil} class is responsible for manipulating urls.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class URLUtil {
 

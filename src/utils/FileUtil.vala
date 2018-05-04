@@ -22,7 +22,7 @@ namespace App.Utils {
 	/**
      * The {@code FileUtil} class related to files handling.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class FileUtil {
 

@@ -20,11 +20,11 @@ namespace App.Configs {
      * The {@code Constants} class is responsible for defining all 
      * the constants used in the application.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class Constants {
         public abstract const string ID = "com.github.kjlaw89.web-watcher";
-        public abstract const string VERSION = "0.0.1";
+        public abstract const string VERSION = "1.0.0";
         public abstract const string PROGRAM_NAME = "Web Watcher";
         public abstract const string APP_YEARS = "2018";
         public abstract const string APP_ICON = "com.github.kjlaw89.web-watcher";

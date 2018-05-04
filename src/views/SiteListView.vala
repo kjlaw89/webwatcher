@@ -25,7 +25,7 @@ namespace App.Views {
 	/**
      * The {@code SiteListView} class.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
 	public class SiteListView : Gtk.Viewport {
 

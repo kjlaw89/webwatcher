@@ -24,7 +24,7 @@ namespace App.Configs {
      * the texts that are displayed in the application and must be translated.
      *
      * @see Granite.Services.Settings
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class Settings : Granite.Services.Settings {
 

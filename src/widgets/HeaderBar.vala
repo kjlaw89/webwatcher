@@ -29,7 +29,7 @@ namespace App.Widgets {
      * The {@code HeaderBar} class is responsible for displaying top bar. Similar to a horizontal box.
      *
      * @see Gtk.HeaderBar
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class HeaderBar : Gtk.HeaderBar {
 

@@ -25,7 +25,7 @@ namespace App.Database {
      * needed to access and maintain the Sqlite database
      *
      * @see Sqlite.Database
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class DB {
 
@@ -80,7 +80,7 @@ namespace App.Database {
                         value       TEXT        NOT NULL
                     );
 
-                    INSERT INTO `settings` (`key`, `value`) VALUES ('version', '0.0.1');
+                    INSERT INTO `settings` (`key`, `value`) VALUES ('version', '1.0.0');
                     CREATE INDEX `key` ON `settings` (key);
                 ";
 

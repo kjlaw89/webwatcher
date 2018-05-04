@@ -26,7 +26,7 @@ namespace App {
      * The {@code Application} class is a foundation for all granite-based applications.
      *
      * @see Granite.Application
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class Application : Granite.Application {
 

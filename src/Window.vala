@@ -28,7 +28,7 @@ namespace App {
      * allowing the user to manipulate the window (resize it, move it, close it, ...).
      *
      * @see Gtk.ApplicationWindow
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class Window : Gtk.ApplicationWindow {
          

@@ -22,7 +22,7 @@
  *
  * @see App.Application
  * @return {@code void}
- * @since 0.0.1
+ * @since 1.0.0
  */
 public static void main (string [] args) {
     var app = new App.Application ();

@@ -25,7 +25,7 @@ namespace App.Views {
 	/**
      * The {@code SiteView} class.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
 	public class SiteView : Gtk.Box {
 

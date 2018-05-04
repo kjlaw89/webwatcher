@@ -28,7 +28,7 @@ namespace App.Widgets {
      * where the user can add and remove sites from the monitor
      *
      * @see Gtk.Grid
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class SiteItem : Gtk.EventBox {
 

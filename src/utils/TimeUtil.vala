@@ -23,7 +23,7 @@ namespace App.Utils {
     /**
      * The class {@code TimeUtil} handles time-related data.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class TimeUtil {
      

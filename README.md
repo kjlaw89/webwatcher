@@ -11,9 +11,9 @@
     <img src="https://img.shields.io/badge/License-GPL--3.0-blue.svg">
    </a>
   <a href="https://github.com/kjlaw89/web-watcher/releases">
-    <img src="https://img.shields.io/badge/Release-v%200.0.1-orange.svg">
+    <img src="https://img.shields.io/badge/Release-v%201.0.0-orange.svg">
    </a>
-  <a href="https://github.com/kjlaw89/web-watcher/releases/download/0.0.1/com.github.kjlaw89.web-watcher_0.0.1_amd64.deb">
+  <a href="https://github.com/kjlaw89/web-watcher/releases/download/1.0.0/com.github.kjlaw89.web-watcher_1.0.0_amd64.deb">
      <img src="https://img.shields.io/badge/Download-%20Package .deb-yellow.svg">
     </a>
 </p>

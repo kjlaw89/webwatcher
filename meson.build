@@ -1,5 +1,5 @@
 project('com.github.kjlaw89.web-watcher', ['vala', 'c'],
-    version : '0.0.1',
+    version : '1.0.0',
     license: 'GPL-3.0'
 )
 
@@ -26,22 +26,28 @@ subdir('data')
 subdir('po')
 subdir('src')
 
+dependencies = [
+    dependency('granite'),
+    dependency('gobject-2.0'),
+    dependency('gtk+-3.0'),
+    dependency('glib-2.0'),
+    dependency('sqlite3'),
+    dependency('libsoup-2.4'),
+    dependency('json-glib-1.0'),
+    dependency('unity'),
+    dependency('appindicator3-0.1')
+]
+
 executable('com.github.kjlaw89.web-watcher',
     sources,
     gresource,
     c_args: c_args,
-    dependencies :[
-        dependency('granite'),
-        dependency('gobject-2.0'),
-        dependency('gtk+-3.0'),
-        dependency('glib-2.0'),
-        dependency('sqlite3'),
-        dependency('libsoup-2.4'),
-        dependency('json-glib-1.0'),
-        dependency('unity'),
-        dependency('appindicator3-0.1')
-    ],
+    dependencies: dependencies,
     install : true
+)
+
+declare_dependency(
+    dependencies: dependencies
 )
 
 meson.add_install_script('post_install.py')

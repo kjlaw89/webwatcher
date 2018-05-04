@@ -24,7 +24,7 @@ namespace App.Views {
 	/**
      * The {@code AppView} class.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
 	public class AppView : Gtk.Grid {
 

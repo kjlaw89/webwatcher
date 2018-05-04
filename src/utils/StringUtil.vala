@@ -28,7 +28,7 @@ namespace App.Utils {
      * Where a {@code boolean} or {@code int} is being returned
      * details vary by method.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
     public class StringUtil {
 

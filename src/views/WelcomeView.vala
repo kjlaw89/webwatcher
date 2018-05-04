@@ -22,7 +22,7 @@ namespace App.Views {
 	/**
      * The {@code WelcomeView} class.
      *
-     * @since 0.0.1
+     * @since 1.0.0
      */
 	public class WelcomeView : Gtk.Viewport {
 
