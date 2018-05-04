@@ -31,4 +31,5 @@ install:
 
 script:
   - houston ci
+    --name-domain com.github.kjlaw89.webwatcher
     --distribution $DIST
