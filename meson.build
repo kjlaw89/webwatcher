@@ -1,4 +1,4 @@
-project('com.github.kjlaw89.web-watcher', ['vala', 'c'],
+project('com.github.kjlaw89.webwatcher', ['vala', 'c'],
     version : '1.0.0',
     license: 'GPL-3.0'
 )
@@ -7,7 +7,7 @@ gnome = import('gnome')
 i18n = import('i18n')
 
 gresource = gnome.compile_resources(
-    'as-resources', 'data/com.github.kjlaw89.web-watcher.gresource.xml',
+    'as-resources', 'data/com.github.kjlaw89.webwatcher.gresource.xml',
     source_dir: 'data',
     c_name: 'as'
 )
@@ -18,8 +18,7 @@ configure_file(output: 'config.h', configuration: conf)
 config_h_dir = include_directories('.')
 
 c_args = [
-  '-include', 'config.h',
-  '-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE'
+  '-include', 'config.h'
 ]
 
 subdir('data')
@@ -38,7 +37,7 @@ dependencies = [
     dependency('appindicator3-0.1')
 ]
 
-executable('com.github.kjlaw89.web-watcher',
+executable('com.github.kjlaw89.webwatcher',
     sources,
     gresource,
     c_args: c_args,

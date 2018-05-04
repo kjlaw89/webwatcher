@@ -1,9 +1,9 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Name: App Template
+Upstream-Name: Web Watcher
 Source: https://github.com/kjlaw89/web-watcher
 
 Files: *
-Copyright: 2017 KJ Lawrence <kjtehprogrammer@gmail.com>
+Copyright: 2018 KJ Lawrence <kjtehprogrammer@gmail.com>
 License: GPL-3.0+
 
 License: GPL-3.0+

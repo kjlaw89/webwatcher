@@ -23,11 +23,11 @@ namespace App.Configs {
      * @since 1.0.0
      */
     public class Constants {
-        public abstract const string ID = "com.github.kjlaw89.web-watcher";
+        public abstract const string ID = "com.github.kjlaw89.webwatcher";
         public abstract const string VERSION = "1.0.0";
         public abstract const string PROGRAM_NAME = "Web Watcher";
         public abstract const string APP_YEARS = "2018";
-        public abstract const string APP_ICON = "com.github.kjlaw89.web-watcher";
+        public abstract const string APP_ICON = "com.github.kjlaw89.webwatcher";
         public abstract const string ABOUT_COMMENTS = "Monitor your sites for uptime and performance";
         public abstract const string TRANSLATOR_CREDITS = "Github Translators";
         public abstract const string MAIN_URL = "https://kjlaw89.github.io/web-watcher";
@@ -36,7 +36,7 @@ namespace App.Configs {
         public abstract const string TRANSLATE_URL = "https://kjlaw89.github.io/web-watcher";
         public abstract const string TEXT_FOR_ABOUT_DIALOG_WEBSITE = "Website";
         public abstract const string TEXT_FOR_ABOUT_DIALOG_WEBSITE_URL = "https://kjlaw89.github.io/web-watcher";
-        public abstract const string URL_CSS = "com/github/kjlaw89/web-watcher/css/style.css";
+        public abstract const string URL_CSS = "com/github/kjlaw89/webwatcher/css/style.css";
         public abstract const string [] ABOUT_AUTHORS = { "KJ Lawrence <kjtehprogrammer@gmail.com>" };
         public abstract const Gtk.License ABOUT_LICENSE_TYPE = Gtk.License.GPL_3_0;
     }

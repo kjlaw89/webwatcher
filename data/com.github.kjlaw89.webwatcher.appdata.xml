@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2018 KJ Lawrence <kjtehprogrammer@gmail.com> -->
 <component type="desktop-application">
-    <id>com.github.kjlaw89.web-watcher</id>
+    <id>com.github.kjlaw89.webwatcher</id>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
-    <name>App Template</name>
-    <summary>Template for vala apps</summary>
+    <name>Web Watcher</name>
+    <summary>Know when your websites are misbehaving!</summary>
     <developer_name>KJ Lawrence</developer_name>
+    <releases>
+      <release version="1.0.0" date="2018-05-04"/>
+    </releases>
     <provides>
-        <binary>com.github.kjlaw89.web-watcher</binary>
+        <binary>com.github.kjlaw89.webwatcher</binary>
     </provides>
     <screenshots>
         <screenshot type="default">
             <image>https://raw.githubusercontent.com/kjlaw89/web-watcher/master/data/images/screenshot1.png</image>
         </screenshot>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/kjlaw89/web-watcher/master/data/images/screenshot2.png</image>
+        </screenshot>
     </screenshots>
     <description>
         <p>Know when your websites are misbehaving!</p>
+
+        <h2>Features</h2>
+
+        <ul>
+          <li>Easily add as many sites as you wish to monitor</li>
+          <li>All sites are checked every minute</li>
+          <li>Extra meta-data (title and icon) are automatically grabbed</li>
+          <li>Get a notification if a site goes down or comes back up</li>
+          <li>View all historical data for the past 2 hours (with eventual capabilities to export all data)</li>
+          <li>Does not require an external service (uses local network to check sites)</li>
+          <li>Runs in background automatically once started via System tray indicator</li>
+        </ul>
     </description>   
     <url type="homepage">https://kjlaw89.github.io/web-watcher/</url>
     <url type="bugtracker">https://github.com/kjlaw89/web-watcher/issues</url>

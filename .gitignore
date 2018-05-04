@@ -1,7 +1,7 @@
 build/*
 debian/build/*
-debian/com.github.kjlaw89.web-watcher.debhelper.log
-debian/com.github.kjlaw89.web-watcher.substvars
-debian/com.github.kjlaw89.web-watcher/
+debian/com.github.kjlaw89.webwatcher.debhelper.log
+debian/com.github.kjlaw89.webwatcher.substvars
+debian/com.github.kjlaw89.webwatcher/
 debian/debhelper-build-stamp
 debian/files

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2017 KJ Lawrence <kjtehprogrammer@gmail.com>
+* Copyright (c) 2018 KJ Lawrence <kjtehprogrammer@gmail.com>
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -49,8 +49,8 @@ namespace App.Configs {
          * Constructs a new {@code Settings} object 
          * and sets the default exit folder.
          * 
-         * @see web-watcher.Utils.StringUtil#is_empty(string)
-         * @see web-watcher.Constants
+         * @see webwatcher.Utils.StringUtil#is_empty(string)
+         * @see webwatcher.Constants
          */
         private Settings () {
             base (Constants.ID);

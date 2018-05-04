@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2017 KJ Lawrence <kjtehprogrammer@gmail.com>
+* Copyright (c) 2018 KJ Lawrence <kjtehprogrammer@gmail.com>
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -45,10 +45,10 @@ namespace App.Database {
         /**
          * Constructs a new {@code Application} object.
          *
-         * @see web-watcher.Configs.Constants
+         * @see webwatcher.Configs.Constants
          */
         private DB () {
-            var dataDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher";
+            var dataDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.webwatcher";
 
             int status = Sqlite.Database.open (dataDir + "/sites.db", out this.db);
             if (status != Sqlite.OK) {

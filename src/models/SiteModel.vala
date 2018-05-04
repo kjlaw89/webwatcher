@@ -58,7 +58,7 @@ namespace App.Models {
             session.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36";
             session.ssl_strict = false;
 
-            _iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher/icons/";
+            _iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.webwatcher/icons/";
             _iconImage = new Granite.AsyncImage ();
         }
 
@@ -71,7 +71,7 @@ namespace App.Models {
             session.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36";
             session.ssl_strict = false;
 
-            _iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.web-watcher/icons/";
+            _iconDir = Environment.get_home_dir () + "/.local/share/com.github.kjlaw89.webwatcher/icons/";
             _iconImage = new Granite.AsyncImage ();
         }
 

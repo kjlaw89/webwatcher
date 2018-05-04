@@ -1,5 +1,5 @@
 <div align="center">
-  <span align="center"> <img width="80" height="70" class="center" src="https://github.com/kjlaw89/web-watcher/blob/master/data/images/com.github.kjlaw89.web-watcher.png" alt="Icon"></span>
+  <span align="center"> <img width="80" height="70" class="center" src="https://github.com/kjlaw89/web-watcher/blob/master/data/images/com.github.kjlaw89.webwatcher.png" alt="Icon"></span>
   <h1 align="center">Web Watcher</h1>
   <h3 align="center">Know when your websites are misbehaving!</h3>
 </div>
@@ -7,20 +7,23 @@
 <br/>
 
 <p align="center">
-   <a href="https://github.com/kjlaw89/web-watcher/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/License-GPL--3.0-blue.svg">
-   </a>
-  <a href="https://github.com/kjlaw89/web-watcher/releases">
-    <img src="https://img.shields.io/badge/Release-v%201.0.0-orange.svg">
-   </a>
-  <a href="https://github.com/kjlaw89/web-watcher/releases/download/1.0.0/com.github.kjlaw89.web-watcher_1.0.0_amd64.deb">
-     <img src="https://img.shields.io/badge/Download-%20Package .deb-yellow.svg">
+    <a href="https://github.com/kjlaw89/web-watcher/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/License-GPL--3.0-blue.svg">
+    </a>
+    <a href="https://github.com/kjlaw89/web-watcher/releases">
+        <img src="https://img.shields.io/badge/Release-v%201.0.0-orange.svg">
+    </a>
+    <a href="https://github.com/kjlaw89/web-watcher/releases/download/1.0.0/com.github.kjlaw89.webwatcher_1.0.0_amd64.deb">
+        <img src="https://img.shields.io/badge/Download-%20Package .deb-yellow.svg">
+    </a>
+    <a href="https://travis-ci.com/kjlaw89/web-watcher">
+        <img src="https://travis-ci.com/kjlaw89/web-watcher.svg?branch=master" title="Build Status" alt="Build Status">
     </a>
 </p>
 
 <p align="center">
-    <img  src="https://github.com/kjlaw89/web-watcher/blob/master/data/images/screenshot1.png" alt="Screenshot 1"> <br>
-    <img  src="https://github.com/kjlaw89/web-watcher/blob/master/data/images/screenshot2.png" alt="Screenshot 1"> <br>
+    <img src="https://github.com/kjlaw89/web-watcher/blob/master/data/images/screenshot1.png" alt="Screenshot 1"> <br>
+    <img src="https://github.com/kjlaw89/web-watcher/blob/master/data/images/screenshot2.png" alt="Screenshot 1"> <br>
     <a href="https://github.com/kjlaw89/web-watcher/issues/new"> Report a problem! </a>
 </p>
 
@@ -45,9 +48,11 @@ These dependencies must be present before building
  - `debhelper (>= 9)`
  - `libgranite-dev`
  - `libgtk-3-dev`
- - `sqlite3-dev`
- - `unity-dev`
- - `appindicator3-0.1-dev`
+ - `libsqlite3-dev`
+ - `libunity-dev`
+ - `libappindicator3-dev`
+ - `libsoup2.4-dev`
+ - `libjson-glib-dev`
 
  ### Building
 
@@ -57,7 +62,7 @@ meson build && cd build
 meson configure -Dprefix=/usr
 ninja
 sudo ninja install
-com.github.kjlaw89.web-watcher
+com.github.kjlaw89.webwatcher
 ```
 
 ### Deconstruct
