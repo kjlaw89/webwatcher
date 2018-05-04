@@ -6,5 +6,5 @@ Exec=com.github.kjlaw89.webwatcher
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=GNOME;GTK;IDE;Utility;WebDevelopment;Monitor;Security;Profiling
+Categories=GNOME;GTK;IDE;Utility;WebDevelopment;Monitor;Security;Profiling;
 Keywords=app;web;vala;monitor;watch;performance;historical;uptime;
