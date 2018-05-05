@@ -1,6 +1,6 @@
 Format: http://dep.debian.net/deps/dep5
 Upstream-Name: Web Watcher
-Source: https://github.com/kjlaw89/web-watcher
+Source: https://github.com/kjlaw89/webwatcher
 
 Files: *
 Copyright: 2018 KJ Lawrence <kjtehprogrammer@gmail.com>

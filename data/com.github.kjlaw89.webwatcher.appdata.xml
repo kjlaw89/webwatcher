@@ -15,10 +15,10 @@
     </provides>
     <screenshots>
         <screenshot type="default">
-            <image>https://raw.githubusercontent.com/kjlaw89/web-watcher/master/data/images/screenshot1.png</image>
+            <image>https://raw.githubusercontent.com/kjlaw89/webwatcher/master/data/images/screenshot1.png</image>
         </screenshot>
         <screenshot type="default">
-            <image>https://raw.githubusercontent.com/kjlaw89/web-watcher/master/data/images/screenshot2.png</image>
+            <image>https://raw.githubusercontent.com/kjlaw89/webwatcher/master/data/images/screenshot2.png</image>
         </screenshot>
     </screenshots>
     <description>
@@ -70,9 +70,9 @@
       <content_attribute id="money-purchasing">none</content_attribute>
       <content_attribute id="money-gambling">none</content_attribute>
     </content_rating>  
-    <url type="homepage">https://kjlaw89.github.io/web-watcher/</url>
-    <url type="bugtracker">https://github.com/kjlaw89/web-watcher/issues</url>
-    <url type="help">https://github.com/kjlaw89/web-watcher/issues</url>
+    <url type="homepage">https://kjlaw89.github.io/webwatcher/</url>
+    <url type="bugtracker">https://github.com/kjlaw89/webwatcher/issues</url>
+    <url type="help">https://github.com/kjlaw89/webwatcher/issues</url>
     <update_contact>kjtehprogrammer@gmail.com</update_contact>
     <custom>
         <value key="x-appcenter-color-primary">#667885</value>
