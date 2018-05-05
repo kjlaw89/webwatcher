@@ -40,7 +40,19 @@
           <li>Does not require an external service (uses local network to check sites)</li>
           <li>Runs in background automatically once started via System tray indicator</li>
         </ul>
-    </description> 
+    </description>
+    <releases>
+      <release version="1.0.1" date="2018-05-04">
+        <description>
+          <p>Fixed an issue where tray does not appear on first load making it hard to close app</p>
+        </description>
+      </release>
+      <release version="1.0.0" date="2018-05-04">
+        <description>
+          <p>Initial 1.0.0 release!</p>
+        </description>
+      </release>
+    </releases>
     <content_rating type="oars-1.1">
       <content_attribute id="violence-cartoon">none</content_attribute>
       <content_attribute id="violence-fantasy">none</content_attribute>

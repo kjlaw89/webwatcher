@@ -95,7 +95,7 @@ namespace App.Controllers {
                     // Watch online/offline events
                     site.status_changed.connect (this.site_status_changed);
 
-                    if (site.status == "bad") {
+                    if (site.active && site.status == "bad") {
                         this.offlineCount++;
                     }
                 }
@@ -124,6 +124,7 @@ namespace App.Controllers {
 
                         sites.add (site);
                         this.View.siteListView.addSite (site);
+                        this.indicatorView.addSite (site);
                         break;
                 }
             });
@@ -151,7 +152,7 @@ namespace App.Controllers {
         }
         
         private void site_status_changed (SiteModel site, SiteEvent status) {
-            if (!site.notify) {
+            if (!site.notify || !site.active) {
                 return;
             }
             
