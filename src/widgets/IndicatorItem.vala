@@ -34,6 +34,7 @@ namespace App.Widgets {
 
         private string previousLabel;
         private string previousStatus;
+        private bool?   previousActiveStatus;
         private SiteModel _site;
 
         public signal void changed ();
@@ -90,6 +91,11 @@ namespace App.Widgets {
                 }
 
                 this.previousStatus = Site.status;
+            }
+
+            if (this.previousActiveStatus == null || this.previousActiveStatus != Site.active) {
+                this.previousActiveStatus = Site.active;
+                this.changed ();
             }
         }
     }

@@ -38,7 +38,7 @@ namespace App.Views {
          */
 		public AppIndicatorView (AppIndicator.Indicator indicator) {
             this.indicator = indicator;
-            this.show_all ();
+            build_menu ();
         }
 
         public void addSite (SiteModel site) {
@@ -85,6 +85,10 @@ namespace App.Views {
             }
 
             foreach (var entry in sitesList.entries) {
+                if (entry.key.active == false) {
+                    continue;
+                }
+
                 this.add (entry.value);
             }
             
