@@ -37,6 +37,7 @@ namespace App.Views {
         public Gtk.Stack                stack;
         public WelcomeView              welcomeView;
 
+        public signal void menu_event (SiteModel? site, IndicatorEvent event);
         public signal void site_event (SiteModel site, SiteEvent event);
 
 		/**
@@ -50,6 +51,7 @@ namespace App.Views {
             this.app.resizable = true;
 			
             this.headerbar = new HeaderBar ();
+            this.headerbar.menu_event.connect ((site, event) => { this.menu_event (site, event); });
             this.headerbar.site_event.connect ((site, event) => { this.site_event (site, event); });
             this.headerbar.back.connect (() => {
                 this.hide_site ();

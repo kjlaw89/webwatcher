@@ -103,9 +103,9 @@ namespace App.Views {
                 this.menu_event (null, IndicatorEvent.QUIT);
             });
 
-            var seperator = new Gtk.SeparatorMenuItem ();
+            var separator = new Gtk.SeparatorMenuItem ();
 
-            this.append (seperator);
+            this.append (separator);
             this.append (showItem);
             this.append (quitItem);
             this.show_all ();

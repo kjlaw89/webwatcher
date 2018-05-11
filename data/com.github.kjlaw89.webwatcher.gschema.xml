@@ -13,6 +13,18 @@
 			<summary>Most recent y position of Web Watcher</summary>
 			<description>Most recent y position of Web Watcher</description>
 		</key>
+
+    <key name="hide-on-close" type="b">
+			<default>true</default>
+			<summary>Hide application on exit instead of shutdown?</summary>
+			<description>Hide application on exit instead of shutdown?</description>
+		</key>
+
+    <key name="hide-on-start" type="b">
+			<default>true</default>
+			<summary>Hide application on start?</summary>
+			<description>Hide application on start?</description>
+		</key>
 	</schema>
 
 </schemalist>
