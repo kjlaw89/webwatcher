@@ -63,8 +63,13 @@ namespace App {
 
                 window.delete_event.connect ((event) => {
                     settings.save_window_pos (window);
-                    window.hide_on_delete ();
-                    return true;
+
+                    if (settings.hide_on_close) {
+                        window.hide_on_delete ();
+                        return true;
+                    }
+
+                    return false;
                 });
 
                 return;

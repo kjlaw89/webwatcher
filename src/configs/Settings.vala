@@ -34,16 +34,24 @@ namespace App.Configs {
         private static Settings? instance;
 
         /**
-         * This property will represent the location x of the screen.
-         * Variable of type {@code int} as declared.
+         * Last known X position of the window
          */
         public int window_x { get; set; }
 
         /**
-         * This property will represent the location y of the screen.
-         * Variable of type {@code int} as declared.
+         * Last known Y position of the window
          */
         public int window_y { get; set; }
+
+        /**
+         * Should application hide on close or shutdown
+         */
+        public bool hide_on_close { get; set; }
+
+        /**
+         * Should application start hidden
+         */
+        public bool hide_on_start { get; set; }
        
         /**
          * Constructs a new {@code Settings} object 

@@ -33,6 +33,7 @@ namespace App.Widgets {
      */
     public class HeaderBar : Gtk.HeaderBar {
 
+        public signal void menu_event (SiteModel? site, IndicatorEvent event);
         public signal void site_event (SiteModel site, SiteEvent event);
         public signal void back ();
         public signal void filter (string filter);
@@ -40,6 +41,8 @@ namespace App.Widgets {
         private Gtk.Button         backButton;
         private Gtk.Box            buttonBox;
         private Views.SiteFormView formView;
+        private Gtk.Menu           menu;
+        private Gtk.MenuButton     menuButton;
         private Gtk.Button         newButton;
         private Gtk.Popover        newPopover;
         private Gtk.SearchEntry    searchEntry;
@@ -85,10 +88,18 @@ namespace App.Widgets {
                 this.filter (this.searchEntry.text);
             });
 
+            this.menuButton = new Gtk.MenuButton ();
+            this.menuButton.set_image (new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR));
+            this.menuButton.tooltip_text = _("Preferences");
+
+            setup_menu ();
+
             buttonBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            buttonBox.valign = Gtk.Align.CENTER;
             buttonBox.add (this.newButton);
 
             this.pack_start (buttonBox);
+            this.pack_end (this.menuButton);
             this.pack_end (this.searchEntry);
 
             this.setup_popover ();
@@ -105,6 +116,47 @@ namespace App.Widgets {
             this.newPopover.set_size_request (450, 150);
             this.newPopover.modal = true;
             this.newPopover.add (formView);
+        }
+
+        private void setup_menu () {
+            this.menu = new Gtk.Menu ();
+
+            var settings = App.Configs.Settings.get_instance ();
+
+            var hideStartItem = new Gtk.CheckMenuItem.with_label (_("Hide on Start"));
+            hideStartItem.active = settings.hide_on_start;
+
+            var hideCloseItem = new Gtk.CheckMenuItem.with_label (_("Hide on Close"));
+            hideCloseItem.active = settings.hide_on_close;
+
+            var separator = new Gtk.SeparatorMenuItem ();
+            var quitItem = new Gtk.MenuItem.with_label (_("Quit"));
+            quitItem.activate.connect (() => {
+                this.menu_event (null, IndicatorEvent.QUIT);
+            });
+
+            this.menu.add (hideStartItem);
+            this.menu.add (hideCloseItem);
+            this.menu.add (separator);
+            this.menu.add (quitItem);
+
+            this.menu.show_all ();
+
+            this.menuButton.popup = this.menu;
+            
+            // Handle events
+            settings.changed.connect (() => {
+                hideStartItem.active = settings.hide_on_start;
+                hideCloseItem.active = settings.hide_on_close;
+            });
+
+            hideStartItem.toggled.connect (() => {
+                settings.hide_on_start = hideStartItem.active;
+            });
+
+            hideCloseItem.toggled.connect (() => {
+                settings.hide_on_close = hideCloseItem.active;
+            });
         }
 
         public void show_back () {

@@ -71,6 +71,7 @@ namespace App.Controllers {
             // Initialize our application view
             this.application = application;
             this.appView = new AppView (window);
+            this.appView.menu_event.connect (this.indicator_event);
             this.window.add (this.appView);
 
             // Setup our App Indicator
@@ -106,8 +107,14 @@ namespace App.Controllers {
             }
             else {
                 this.View.show_sites ();
-                this.window.hide ();
-                this.window.deiconify ();
+
+                if (this.settings.hide_on_start) {
+                    this.window.hide ();
+                    this.window.deiconify ();
+                }
+                else {
+                    this.window.show_all ();
+                }
             }
 
             this.View.site_event.connect (this.site_changed);

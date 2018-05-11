@@ -81,9 +81,23 @@ namespace App.Views {
             Gtk.StyleContext.reset_widgets (get_style_context ().screen);
         }
 
-        private void update_header () {
+        private void update_header (int? results = null) {
             var text = "";
-            if (this.sitesList.size == 1) {
+
+            if (results != null && results >= 0) {
+                switch (results) {
+                    case 0:
+                        text = _("No results...");
+                        break;
+                    case 1:
+                        text = "1 " + _("result");
+                        break;
+                    default:
+                        text = results.to_string () +" "+ _("results");
+                        break;
+                }
+            }
+            else if (this.sitesList.size == 1) {
                 text = "1 " + _("Monitored Site");
             }
             else {
@@ -91,6 +105,7 @@ namespace App.Views {
             }
 
             this.headerLabel.label = text;
+            this.headerLabel.show ();
         }
 
         public void filter (string filter) {
@@ -98,17 +113,19 @@ namespace App.Views {
                 this.content.remove (child);
             }
 
-            if (filter == null || filter == "") {
-                this.content.add (this.headerLabel);
+            this.content.add (this.headerLabel);
 
+            if (filter == null || filter == "") {
                 foreach (var entry in sitesList.entries) {
                     this.content.add (entry.value);
                 }
 
+                this.update_header ();
                 Gtk.StyleContext.reset_widgets (get_style_context ().screen);
                 return;
             }
 
+            var results = 0;
             foreach (var entry in sitesList.entries) {
                 var title = entry.key.title ?? "";
                 var url = entry.key.url;
@@ -118,8 +135,10 @@ namespace App.Views {
                 }
 
                 this.content.add (entry.value);
+                results++;
             }
 
+            this.update_header (results);
             Gtk.StyleContext.reset_widgets (get_style_context ().screen);
         }
 	}
