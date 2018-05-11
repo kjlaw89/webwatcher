@@ -7,6 +7,12 @@
 <br/>
 
 <p align="center">
+    <a href="https://appcenter.elementary.io/com.github.kjlaw.webwatcher">
+        <img src="https://appcenter.elementary.io/badge.svg">
+    </a>
+</p>
+
+<p align="center">
     <a href="https://github.com/kjlaw89/webwatcher/blob/master/LICENSE">
         <img src="https://img.shields.io/badge/License-GPL--3.0-blue.svg">
     </a>

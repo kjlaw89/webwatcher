@@ -35,7 +35,6 @@ namespace App.Models {
         public int64 created_dt { get; set; default = 0; }
 
         public signal void changed (ResultModel site, SiteEvent event);
-        public signal void status_changed (ResultModel site, SiteEvent status);
 
         /**
          * Constructs a new {@code ResultModel} object.

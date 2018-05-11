@@ -33,7 +33,8 @@ namespace App.Views {
         
         private Gtk.Switch  activeSwitch;
         private Gtk.Switch  alertSwitch;
-        private Gtk.Button  actionButton;
+        private Gtk.Button  deleteButton;
+        private Gtk.Button  saveButton;
         private SiteModel   site;
         private Gtk.Entry   urlEntry;
 
@@ -47,7 +48,7 @@ namespace App.Views {
             this.urlEntry.hexpand = true;
             this.urlEntry.placeholder_text = _("Site URL");
             this.urlEntry.secondary_icon_name = "dialog-information-symbolic";
-            this.urlEntry.secondary_icon_tooltip_text = _("Must be a valid URL (should start with http/https)");
+            this.urlEntry.secondary_icon_tooltip_text = _("Must be a valid URL that starts with http or https");
             this.urlEntry.key_press_event.connect (this.handleInput);
             this.urlEntry.activate.connect (this.handleInputSubmit);
             
@@ -71,12 +72,16 @@ namespace App.Views {
             activeLabel.halign = Gtk.Align.END;
             activeLabel.mnemonic_widget = this.activeSwitch;
 
+            this.deleteButton = new Gtk.Button.with_mnemonic (_("_Delete"));
+            this.deleteButton.halign = Gtk.Align.START;
+            this.deleteButton.get_style_context ().add_class ("destructive-action");
+            this.deleteButton.clicked.connect (this.handleDelete);
 
-            this.actionButton = new Gtk.Button.with_mnemonic ((this.site != null) ? _("Update _Site") : _("Monitor _Site"));
-            this.actionButton.halign = Gtk.Align.END;
-            this.actionButton.get_style_context ().add_class ("suggested-action");
-            this.actionButton.sensitive = false;
-            this.actionButton.clicked.connect (this.handleSubmit);
+            this.saveButton = new Gtk.Button.with_mnemonic ((this.site != null) ? _("Update _Site") : _("Monitor _Site"));
+            this.saveButton.halign = Gtk.Align.END;
+            this.saveButton.get_style_context ().add_class ("suggested-action");
+            this.saveButton.sensitive = false;
+            this.saveButton.clicked.connect (this.handleSubmit);
 
             // Setup layout
             var grid = new Gtk.Grid ();
@@ -94,10 +99,12 @@ namespace App.Views {
                 grid.attach (activeSwitch, 1, 2);
             }
 
+            grid.attach (deleteButton, 0, 3);
+            grid.attach (saveButton, 1, 3);
+
             grid.show_all ();
             
             this.pack_start (grid, true, true, 0);
-            this.pack_start (this.actionButton, false, false, 0);
             this.margin = 12;
             this.orientation = Gtk.Orientation.VERTICAL;
             this.show_all ();
@@ -110,12 +117,12 @@ namespace App.Views {
 
         private bool handleInput (Gdk.EventKey key) {
             
-            this.actionButton.sensitive = this.isValid ();
+            this.saveButton.sensitive = this.isValid ();
             return false;
         }
 
         private void handleInputSubmit () {
-            this.actionButton.sensitive = this.isValid ();
+            this.saveButton.sensitive = this.isValid ();
             this.handleSubmit ();
         }
 
@@ -140,22 +147,32 @@ namespace App.Views {
                 }
             }
         }
+
+        private void handleDelete () {
+            if (this.site == null) {
+                return;
+            }
+
+            this.site.delete ();
+            site_event (this.site, SiteEvent.DELETED);
+        }
         
         public void clear () {
             if (this.site != null) {
                 this.activeSwitch.active = this.site.active;
                 this.alertSwitch.active = this.site.notify;
-                this.actionButton.sensitive = true;
+                this.saveButton.sensitive = true;
                 this.urlEntry.text = this.site.url;
             }
             else {
                 this.activeSwitch.active = true;
                 this.alertSwitch.active = true;
-                this.actionButton.sensitive = false;
+                this.saveButton.sensitive = false;
                 this.urlEntry.text = "";
                 this.urlEntry.has_focus = true;
             }
             
+            this.deleteButton.visible = (this.site != null) ? true : false;
         }
 	}
 }
