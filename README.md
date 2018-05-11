@@ -7,7 +7,7 @@
 <br/>
 
 <p align="center">
-    <a href="https://appcenter.elementary.io/com.github.kjlaw.webwatcher">
+    <a href="https://appcenter.elementary.io/com.github.kjlaw89.webwatcher">
         <img src="https://appcenter.elementary.io/badge.svg">
     </a>
 </p>
