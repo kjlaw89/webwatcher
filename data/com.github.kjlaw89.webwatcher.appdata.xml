@@ -7,9 +7,6 @@
     <name>Web Watcher</name>
     <summary>Know when your websites are misbehaving!</summary>
     <developer_name>KJ Lawrence</developer_name>
-    <releases>
-      <release version="1.0.0" date="2018-05-04"/>
-    </releases>
     <provides>
         <binary>com.github.kjlaw89.webwatcher</binary>
     </provides>
@@ -22,13 +19,12 @@
         </screenshot>
     </screenshots>
     <description>
-        <p>Know when your websites are misbehaving!</p>
+        <p>
+          A simple way to monitor your favorite sites uptime and their performance.
+        </p>
 
         <p>
-          Web watcher monitors any site that you want. Just add it to the list and it
-          will be checked for activity every second. All history is kept so you can review
-          performance over a period of time. Web watcher runs through your connection so
-          no external service is required. When an outage occurs you'll receive a notice immediately.
+          All history is kept so you can review performance over a period of time. Web watcher runs through your connection so no external service is required. When an outage occurs you'll receive a notice immediately.
         </p>
 
         <ul>
@@ -39,9 +35,19 @@
           <li>View all historical data for the past 2 hours (with eventual capabilities to export all data)</li>
           <li>Does not require an external service (uses local network to check sites)</li>
           <li>Runs in background automatically once started via System tray indicator</li>
+          <li>All sites are easily accessible through the System Tray indicator</li>
         </ul>
     </description>
     <releases>
+      <release version="1.1.0" date="2018-05-10">
+        <description>
+          <ul>
+            <li>Added ability to delete a site</li>
+            <li>Added app preferences</li>
+            <li>Minor tweaks/adjustments</li>
+          </ul>
+        </description>
+      </release>
       <release version="1.0.1" date="2018-05-04">
         <description>
           <p>Fixed an issue where tray does not appear on first load making it hard to close app</p>
@@ -89,6 +95,6 @@
     <custom>
         <value key="x-appcenter-color-primary">#667885</value>
         <value key="x-appcenter-color-primary-text">#FFF</value>
-        <value key="x-appcenter-suggested-price">5</value>
+        <value key="x-appcenter-suggested-price">3</value>
     </custom>
 </component>

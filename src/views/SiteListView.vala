@@ -69,7 +69,6 @@ namespace App.Views {
             this.update_header ();
 
             Gtk.StyleContext.reset_widgets (get_style_context ().screen);
-            
         }
 
         public void removeSite (SiteModel site) {

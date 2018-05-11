@@ -47,7 +47,6 @@ namespace App.Models {
         public int64 icon_updated_dt { get; set; default = 0; }
 
         public signal void changed (SiteModel site, SiteEvent event);
-        public signal void status_changed (SiteModel site, SiteEvent status);
 
         /**
          * Constructs a new {@code SiteModel} object.
@@ -211,6 +210,16 @@ namespace App.Models {
         }
 
         public override bool delete () {
+            var siteStatement = this.db.Prepare ("DELETE FROM `sites` WHERE id = $ID");
+            var resultsStatement = this.db.Prepare ("DELETE FROM `results` WHERE site_id = $ID");
+
+            this.db.bind_int (siteStatement, "$ID", id);
+            this.db.bind_int (resultsStatement, "$ID", id);
+
+            this.db.ExecuteStatement (siteStatement);
+            this.db.ExecuteStatement (resultsStatement);
+
+            this.changed (this, SiteEvent.DELETED);
             return false;
         }
 
@@ -250,7 +259,7 @@ namespace App.Models {
                 // Update the status based on the status code value (200 is usually expected)
                 if (statusCode >= 200 && statusCode < 300 && this.response < 30000) {
                     if (this.status == "bad") {
-                        this.status_changed (this, SiteEvent.ONLINE);
+                        this.changed (this, SiteEvent.ONLINE);
                     }
                     
                     this.status = "good";
@@ -279,7 +288,7 @@ namespace App.Models {
                 // After 5 failed attempts, display a notification if enabled
                 if (this.failures >= 3 && this.status != "bad") {
                     this.status = "bad";
-                    this.status_changed (this, SiteEvent.OFFLINE);
+                    this.changed (this, SiteEvent.OFFLINE);
                 }
 
                 // Attempt to parse out <title> tag

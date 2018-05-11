@@ -31,16 +31,16 @@ namespace App.Controllers {
      */
 	public class AppController {
 
-        private Gtk.Application     application;
-        private AppView             appView;
-        private DB                  database;
+        private Gtk.Application        application;
+        private AppView                appView;
+        private DB                     database;
         private AppIndicator.Indicator indicator;
-        private AppIndicatorView    indicatorView;
-        private Unity.LauncherEntry launcherEntry;
-        private int                 offlineCount = 0;
-        private App.Configs.Settings  settings;
-        private HashSet<SiteModel>  sites = new HashSet<SiteModel> ();
-        private Gtk.ApplicationWindow window;
+        private AppIndicatorView       indicatorView;
+        private Unity.LauncherEntry    launcherEntry;
+        private int                    offlineCount = 0;
+        private App.Configs.Settings   settings;
+        private HashSet<SiteModel>     sites = new HashSet<SiteModel> ();
+        private Gtk.ApplicationWindow  window;
 
         public AppView View { get { return appView; } }
 
@@ -83,7 +83,6 @@ namespace App.Controllers {
             this.database = DB.GetInstance ();
             var statement = this.database.Prepare ("SELECT id FROM `sites` ORDER BY `order` ASC");
 
-            var count = 0;
             while (statement.step () == Sqlite.ROW) {
                 var site = new SiteModel ();
 
@@ -92,18 +91,16 @@ namespace App.Controllers {
                     this.appView.siteListView.addSite (site);
                     this.indicatorView.addSite (site);
 
-                    // Watch online/offline events
-                    site.status_changed.connect (this.site_status_changed);
+                    // Watch for any changes to the site's status
+                    site.changed.connect (this.site_changed);
 
                     if (site.active && site.status == "bad") {
                         this.offlineCount++;
                     }
                 }
-
-                count++;
             }
 
-            if (count == 0) {
+            if (sites.size == 0) {
                 this.View.show_welcome ();
                 this.window.show_all ();
             }
@@ -112,22 +109,8 @@ namespace App.Controllers {
                 this.window.hide ();
                 this.window.deiconify ();
             }
-            
-            // Handle events to the sites
-            this.View.site_event.connect ((site, event) => {
-                switch (event) {
-                    case SiteEvent.ADDED:
-                        if (count == 0) {
-                            this.View.show_sites ();
-                            count++;
-                        }
 
-                        sites.add (site);
-                        this.View.siteListView.addSite (site);
-                        this.indicatorView.addSite (site);
-                        break;
-                }
-            });
+            this.View.site_event.connect (this.site_changed);
 
             // Setup our launcher entry events
             this.launcherEntry = Unity.LauncherEntry.get_for_desktop_id (Constants.ID + ".desktop");
@@ -151,33 +134,61 @@ namespace App.Controllers {
             });
         }
         
-        private void site_status_changed (SiteModel site, SiteEvent status) {
-            if (!site.notify || !site.active) {
-                return;
-            }
-            
-            var title = (status == SiteEvent.ONLINE) ? _("Website is up") : _("Website is down");
-            var body = (site.title != null) ? site.title + "\n" + site.url : site.url;
-            
-            var notification = new Notification (title);
-            notification.set_body (body);
-            notification.set_priority (NotificationPriority.NORMAL);
+        private void site_changed (SiteModel site, SiteEvent event) {
+            switch (event) {
+                case SiteEvent.ADDED:
+                    sites.add (site);
+                    this.View.siteListView.addSite (site);
+                    this.indicatorView.addSite (site);
 
-            if (site.icon != null && site.icon != "") {
-                notification.set_icon (site.get_icon_image ().gicon_async);
-            }
-            
-            application.send_notification (Constants.ID, notification);
+                    this.View.show_sites ();
+                    break;
+                case SiteEvent.DELETED:
+                    if (site.status == "bad") {
+                        this.offlineCount--;
+                        this.launcherEntry.count_visible = this.offlineCount > 0;
+                        this.launcherEntry.count = this.offlineCount;
+                    }
 
-            if (status == SiteEvent.ONLINE) {
-                this.offlineCount--;
-            }
-            else {
-                this.offlineCount++;
-            }
+                    sites.remove (site);
+                    this.View.hide_site ();
+                    this.View.siteListView.removeSite (site);
+                    this.indicatorView.removeSite (site);
 
-            this.launcherEntry.count_visible = this.offlineCount > 0;
-            this.launcherEntry.count = this.offlineCount;
+                    if (sites.size == 0) {
+                        this.View.show_welcome ();
+                    }
+                    break;
+                case SiteEvent.ONLINE:
+                case SiteEvent.OFFLINE:
+                    if (!site.notify || !site.active) {
+                        return;
+                    }
+                    
+                    var title = (event == SiteEvent.ONLINE) ? _("Website is up") : _("Website is down");
+                    var body = (site.title != null) ? site.title + "\n" + site.url : site.url;
+                    
+                    var notification = new Notification (title);
+                    notification.set_body (body);
+                    notification.set_priority (NotificationPriority.NORMAL);
+        
+                    if (site.icon != null && site.icon != "") {
+                        notification.set_icon (site.get_icon_image ().gicon_async);
+                    }
+                    
+                    application.send_notification (Constants.ID, notification);
+        
+                    if (event == SiteEvent.ONLINE) {
+                        this.offlineCount--;
+                    }
+                    else {
+                        this.offlineCount++;
+                    }
+        
+                    this.launcherEntry.count_visible = this.offlineCount > 0;
+                    this.launcherEntry.count = this.offlineCount;
+                    break;
+            }
         }
 
         private void indicator_event (SiteModel? site, IndicatorEvent event) {

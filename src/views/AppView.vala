@@ -71,6 +71,7 @@ namespace App.Views {
             // Initialize our control view
             this.stack = new Gtk.Stack ();
             this.stack.expand = true;
+            this.stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
             this.add (stack);
             
             this.mainContent = new Gtk.ScrolledWindow (null, null);
