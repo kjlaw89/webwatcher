@@ -22,12 +22,12 @@ using App.Widgets;
 
 namespace App.Views {
 
-	/**
+    /**
      * The {@code SiteView} class.
      *
      * @since 1.0.0
      */
-	public class SiteView : Gtk.Box {
+    public class SiteView : Gtk.Box {
 
         private Gtk.ScrolledWindow scrollResultsWindow;
         private Gtk.Viewport resultsViewport;
@@ -48,7 +48,7 @@ namespace App.Views {
 
         public SiteModel Site { get { return _site; } }
 
-		/**
+        /**
          * Constructs a new {@code SiteView} object.
          */
         public SiteView (SiteModel site) {
@@ -230,5 +230,5 @@ namespace App.Views {
             this.treeView.set_model (store);
             this.treeView.show_all ();
         }
-	}
+    }
 }

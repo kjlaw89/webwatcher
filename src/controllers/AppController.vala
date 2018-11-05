@@ -29,7 +29,7 @@ namespace App.Controllers {
      *
      * @since 1.0.0
      */
-	public class AppController {
+    public class AppController {
 
         private Gtk.Application        application;
         private AppView                appView;
@@ -47,7 +47,7 @@ namespace App.Controllers {
         /**
          * Constructs a new {@code AppController} object.
          */
-		public AppController (Gtk.ApplicationWindow window, Gtk.Application application) {
+        public AppController (Gtk.ApplicationWindow window, Gtk.Application application) {
             this.settings = App.Configs.Settings.get_instance ();
             this.window = window;
 
@@ -233,5 +233,5 @@ namespace App.Controllers {
             this.application.add_accelerator ("<Control>f", "app.find", null);
             this.application.add_accelerator ("<Control>q", "app.quit", null);
         }
-	}
+    }
 }

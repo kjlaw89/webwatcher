@@ -21,12 +21,12 @@ using App.Widgets;
 
 namespace App.Views {
 
-	/**
+    /**
      * The {@code AppView} class.
      *
      * @since 1.0.0
      */
-	public class SiteFormView : Gtk.Box {
+    public class SiteFormView : Gtk.Box {
 
         public signal void site_event (SiteModel site, SiteEvent event);
 
@@ -38,10 +38,10 @@ namespace App.Views {
         private SiteModel   site;
         private Gtk.Entry   urlEntry;
 
-		/**
+        /**
          * Constructs a new {@code SiteFormView} object.
          */
-		public SiteFormView (SiteModel? site = null) {
+        public SiteFormView (SiteModel? site = null) {
             this.site = site;
 
             this.urlEntry = new Gtk.Entry ();
@@ -174,5 +174,5 @@ namespace App.Views {
             
             this.deleteButton.visible = (this.site != null) ? true : false;
         }
-	}
+    }
 }

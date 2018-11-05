@@ -24,7 +24,7 @@ namespace App.Models {
      *
      * @since 1.0.0
      */
-	public class SiteModel : BaseModel {
+    public class SiteModel : BaseModel {
 
         private int failures = 0;
         private bool fetching_icon = false;
@@ -51,7 +51,7 @@ namespace App.Models {
         /**
          * Constructs a new {@code SiteModel} object.
          */
-		public SiteModel () {
+        public SiteModel () {
             session = new Soup.Session ();
             session.timeout = 60;
             session.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36";
@@ -456,6 +456,6 @@ namespace App.Models {
 
             return null;
         }
-	}
+    }
 
 }

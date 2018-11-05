@@ -24,7 +24,7 @@ namespace App.Models {
      *
      * @since 1.0.0
      */
-	public class ResultModel : BaseModel {
+    public class ResultModel : BaseModel {
 
         public int id { get; set; }
         public int site_id { get; set; }
@@ -39,7 +39,7 @@ namespace App.Models {
         /**
          * Constructs a new {@code ResultModel} object.
          */
-		public ResultModel () {}
+        public ResultModel () {}
 
         public ResultModel.with_details (int site, double response, int code, string status) {
             this.site_id = site;
@@ -151,6 +151,6 @@ namespace App.Models {
         public override bool delete () {
             return false;
         }
-	}
+    }
 
 }

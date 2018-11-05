@@ -21,12 +21,12 @@ using App.Widgets;
 
 namespace App.Views {
 
-	/**
+    /**
      * The {@code AppView} class.
      *
      * @since 1.0.0
      */
-	public class AppView : Gtk.Grid {
+    public class AppView : Gtk.Grid {
 
         private Gtk.ApplicationWindow   app;
         private SiteView                activeSiteView;
@@ -40,16 +40,16 @@ namespace App.Views {
         public signal void menu_event (SiteModel? site, IndicatorEvent event);
         public signal void site_event (SiteModel site, SiteEvent event);
 
-		/**
+        /**
          * Constructs a new {@code AppView} object.
          */
-		public AppView (Gtk.ApplicationWindow app) {
+        public AppView (Gtk.ApplicationWindow app) {
             this.app = app;
             this.app.set_default_size (700, 600);
             this.app.set_size_request (700, 600);
             this.app.deletable = true;
             this.app.resizable = true;
-			
+            
             this.headerbar = new HeaderBar ();
             this.headerbar.menu_event.connect ((site, event) => { this.menu_event (site, event); });
             this.headerbar.site_event.connect ((site, event) => { this.site_event (site, event); });
@@ -121,5 +121,5 @@ namespace App.Views {
             this.stack.visible_child_name = "main-content";
             this.headerbar.hide_back ();
         }
-	}
+    }
 }

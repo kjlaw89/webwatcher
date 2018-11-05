@@ -21,22 +21,22 @@ using App.Widgets;
 
 namespace App.Views {
 
-	/**
+    /**
      * The {@code AppView} class.
      *
      * @since 1.0.0
      */
-	public class AppIndicatorView : Gtk.Menu {
+    public class AppIndicatorView : Gtk.Menu {
 
         public signal void menu_event (SiteModel? site, IndicatorEvent event);
 
         private Gee.HashMap<SiteModel, IndicatorItem> sitesList = new Gee.HashMap<SiteModel, IndicatorItem> ();
         private AppIndicator.Indicator indicator;
 
-		/**
+        /**
          * Constructs a new {@code AppIndicatorView} object.
          */
-		public AppIndicatorView (AppIndicator.Indicator indicator) {
+        public AppIndicatorView (AppIndicator.Indicator indicator) {
             this.indicator = indicator;
             build_menu ();
         }

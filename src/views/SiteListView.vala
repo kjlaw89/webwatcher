@@ -22,12 +22,12 @@ using App.Widgets;
 
 namespace App.Views {
 
-	/**
+    /**
      * The {@code SiteListView} class.
      *
      * @since 1.0.0
      */
-	public class SiteListView : Gtk.Viewport {
+    public class SiteListView : Gtk.Viewport {
 
         private Gtk.Label headerLabel;
         private Gtk.Box content;
@@ -35,7 +35,7 @@ namespace App.Views {
 
         public signal void site_selected (SiteModel site);
 
-		/**
+        /**
          * Constructs a new {@code SiteListView} object.
          */
         public SiteListView () {
@@ -141,5 +141,5 @@ namespace App.Views {
             this.update_header (results);
             Gtk.StyleContext.reset_widgets (get_style_context ().screen);
         }
-	}
+    }
 }
