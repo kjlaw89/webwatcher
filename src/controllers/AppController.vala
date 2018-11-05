@@ -230,8 +230,11 @@ namespace App.Controllers {
             this.application.add_action (find_action);
             this.application.add_action (quit_action);
 
-            this.application.add_accelerator ("<Control>f", "app.find", null);
-            this.application.add_accelerator ("<Control>q", "app.quit", null);
+            string[] find = {"<Control>f", "0"};
+            string[] quit = {"<Control>q", "0"};
+
+            this.application.set_accels_for_action ("app.find", find);
+            this.application.set_accels_for_action ("app.quit", quit);
         }
     }
 }
