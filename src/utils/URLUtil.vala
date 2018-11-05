@@ -43,7 +43,7 @@ namespace App.Utils {
 		        }
 
 	        } catch (RegexError e) {
-	            GLib.message("Erro: %s", e.message);
+	            GLib.message ("Erro: %s", e.message);
 	        }
 
 	        return true;

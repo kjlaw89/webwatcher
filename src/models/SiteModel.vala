@@ -127,7 +127,7 @@ namespace App.Models {
                             this.updated_dt = val.to_int64 ();
                             break;
                         case "icon_updated_dt":
-                            this.icon_updated_dt = val.to_int64();
+                            this.icon_updated_dt = val.to_int64 ();
                             break;
                     }
                 }
