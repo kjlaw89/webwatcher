@@ -163,10 +163,10 @@ namespace App.Views {
 
             var iconFile = Site.get_icon_file ();
             if (iconFile != null) {
-                this.iconImage.set_from_file_async (iconFile, 64, 64, true);
+                this.iconImage.set_from_file_async.begin (iconFile, 64, 64, true);
             }
             else {
-                this.iconImage.set_from_icon_name_async ("www", Gtk.IconSize.DIALOG);
+                this.iconImage.set_from_icon_name_async.begin ("www", Gtk.IconSize.DIALOG);
             }
 
             Gtk.TreeIter iter;

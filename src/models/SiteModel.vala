@@ -433,10 +433,10 @@ namespace App.Models {
         private void update_icon () {
             var iconFile = this.get_icon_file ();
             if (iconFile != null) {
-                this._iconImage.set_from_file_async (iconFile, 32, 32, true);
+                this._iconImage.set_from_file_async.begin (iconFile, 32, 32, true);
             }
             else {
-                this._iconImage.set_from_icon_name_async ("www", Gtk.IconSize.DND);
+                this._iconImage.set_from_icon_name_async.begin ("www", Gtk.IconSize.DND);
             }
         }
 
