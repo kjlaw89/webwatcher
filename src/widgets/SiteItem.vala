@@ -67,7 +67,7 @@ namespace App.Widgets {
             this.nextImage.opacity = 0.3;
 
             var imageBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            imageBox.margin_left = 10;
+            imageBox.margin_start = 10;
             imageBox.valign = Gtk.Align.CENTER;
             imageBox.width_request = 28;
             imageBox.add (Site.get_icon_image ());
@@ -80,7 +80,7 @@ namespace App.Widgets {
             statusGrid.hexpand = true;
             statusGrid.halign = Gtk.Align.END;
             statusGrid.valign = Gtk.Align.CENTER;
-            statusGrid.margin_right = 10;
+            statusGrid.margin_end = 10;
 
             var statusBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             statusBox.width_request = 100;

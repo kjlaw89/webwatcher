@@ -45,7 +45,7 @@ namespace App.Views {
             this.content = new Gtk.Box (Gtk.Orientation.VERTICAL, 10);
 
             this.headerLabel = new Granite.HeaderLabel ("");
-            this.headerLabel.margin_left = 15;
+            this.headerLabel.margin_start = 15;
             this.headerLabel.get_style_context ().add_class ("h1");
 
             this.content.add (this.headerLabel);

@@ -65,7 +65,7 @@ namespace App.Views {
             this.urlLabel = new Gtk.Label (null);
             this.updateButton = new Gtk.Button.from_icon_name ("edit-symbolic", Gtk.IconSize.BUTTON);
             this.updateButton.get_style_context ().add_class ("image-button");
-            this.updateButton.margin_left = 10;
+            this.updateButton.margin_start = 10;
             this.updateButton.clicked.connect (() => {
                 this.updatePopover.show ();
                 this.formView.clear ();
