@@ -49,7 +49,7 @@ namespace App.Views {
             this.app.set_size_request (700, 600);
             this.app.deletable = true;
             this.app.resizable = true;
-            
+
             this.headerbar = new HeaderBar ();
             this.headerbar.menu_event.connect ((site, event) => { this.menu_event (site, event); });
             this.headerbar.site_event.connect ((site, event) => { this.site_event (site, event); });
@@ -75,7 +75,7 @@ namespace App.Views {
             this.stack.expand = true;
             this.stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
             this.add (stack);
-            
+
             this.mainContent = new Gtk.ScrolledWindow (null, null);
             this.siteContent = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             this.siteContent.hexpand = true;
@@ -85,12 +85,12 @@ namespace App.Views {
             this.stack.add_named (siteContent, "site-content");
             this.stack.visible_child_name = "main-content";
         }
-        
+
         public void show_welcome () {
             foreach (var child in mainContent.get_children ()) {
                 mainContent.remove (child);
             }
-            
+
             mainContent.add (this.welcomeView);
             mainContent.show_all ();
         }

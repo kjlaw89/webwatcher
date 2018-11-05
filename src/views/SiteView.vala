@@ -76,7 +76,7 @@ namespace App.Views {
             this.urlBox.margin_bottom = 10;
             this.urlBox.add (this.urlLabel);
             this.urlBox.add (this.updateButton);
-            
+
 
             this.iconImage = new Granite.AsyncImage ();
             this.iconImage.margin = 10;
@@ -174,19 +174,19 @@ namespace App.Views {
 
             var db = App.Database.DB.GetInstance ();
             var sql = "
-                SELECT 
-                    created_dt, 
-                    response, 
-                    response_code, 
+                SELECT
+                    created_dt,
+                    response,
+                    response_code,
                     status
-                FROM `results` 
+                FROM `results`
                 WHERE site_id = $SITE_ID AND created_dt >= $CREATED_DT
                 ORDER BY created_dt DESC";
 
             var statement = db.Prepare (sql);
             db.bind_int (statement, "$SITE_ID", Site.id);
             db.bind_int64 (statement, "$CREATED_DT", new DateTime.now_utc ().to_unix () - 7200);
-            
+
             var columns = statement.column_count ();
             while (statement.step () == Sqlite.ROW) {
                 var time = "";

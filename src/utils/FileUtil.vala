@@ -31,7 +31,7 @@ namespace App.Utils {
          *
          * Exemple:
          * > FileUtil.open_folder_files(uris)
-         * 
+         *
          * @param {@code string} - uris
          */
         public static void open_folder_file_app (string[] uris) {
@@ -53,7 +53,7 @@ namespace App.Utils {
          *
          * Exemple:
          * > FileUtil.create_file("/etc", "ola.text", array.data);
-         * 
+         *
          * @param {@code string} - dir
          * @param {@code string} - name_file
          * @param {@code GenericArray<string> > data} - words
@@ -61,11 +61,11 @@ namespace App.Utils {
         public static void create_file (string dir, string name_file, string[] words) {
             try {
                 var directory = File.new_for_path (dir);
-                
+
                 if (!directory.query_exists ()) {
                     // Create directory and parent directories if none exist
                         directory.make_directory_with_parents ();
-                } 
+                }
 
                 var file = File.new_for_path (dir + "/" + name_file);
                 var text = StringUtil.EMPTY;
@@ -74,7 +74,7 @@ namespace App.Utils {
                     text += (StringUtil.SPACE + word);
                 }
 
-                if (!file.query_exists ()) {    
+                if (!file.query_exists ()) {
                     var file_stream = file.create (FileCreateFlags.NONE);
                     var data_stream = new DataOutputStream (file_stream);
                     data_stream.put_string (text);
@@ -90,7 +90,7 @@ namespace App.Utils {
          *
          * Exemple:
          * > FileUtil.delete_file("/etc", "ola.text");
-         * 
+         *
          * @param {@code string} - dir
          * @param {@code string} - name_file
          */
@@ -98,7 +98,7 @@ namespace App.Utils {
             try {
                 var file = File.new_for_path (dir + "/" + name_file);
 
-                if (file.query_exists ()) {    
+                if (file.query_exists ()) {
                     file.delete ();
                 }
 

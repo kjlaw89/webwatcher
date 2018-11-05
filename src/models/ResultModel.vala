@@ -95,7 +95,7 @@ namespace App.Models {
 
             return loaded;
         }
-        
+
         public override bool save () {
             var sql = "";
             var state = SiteEvent.ADDED;
@@ -144,7 +144,7 @@ namespace App.Models {
             if (state == SiteEvent.ADDED) {
                 this.id = (int)this.db.LastID ();
             }
-            
+
             return true;
         }
 

@@ -17,7 +17,7 @@
 namespace App.Configs {
 
     /**
-     * The {@code Constants} class is responsible for defining all 
+     * The {@code Constants} class is responsible for defining all
      * the constants used in the application.
      *
      * @since 1.0.0

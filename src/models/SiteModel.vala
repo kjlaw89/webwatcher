@@ -144,7 +144,7 @@ namespace App.Models {
 
             return loaded;
         }
-        
+
         public override bool save () {
             var sql = "";
             var state = SiteEvent.ADDED;
@@ -203,7 +203,7 @@ namespace App.Models {
             if (state == SiteEvent.ADDED) {
                 this.id = (int)this.db.LastID ();
             }
-            
+
             this.update_icon ();
             this.changed (this, state);
             return true;
@@ -261,7 +261,7 @@ namespace App.Models {
                     if (this.status == "bad") {
                         this.changed (this, SiteEvent.ONLINE);
                     }
-                    
+
                     this.status = "good";
                     this.failures = 0;
                 }
@@ -300,7 +300,7 @@ namespace App.Models {
                 new ResultModel.with_details (this.id, this.response, (int)statusCode, this.status);
 
                 this.running = false;
-                this.save ();                
+                this.save ();
 
                 // If everything is good and the last time we updated the icon was more than 5 minutes ago, fetch a new icon
                 if (this.status == "good" && currentTime - this.icon_updated_dt > 300) {
@@ -314,10 +314,10 @@ namespace App.Models {
             if (this.fetching_icon) {
                 return;
             }
-            
+
             info ("Fetching updated icon for " + this.url);
             this.fetching_icon = true;
-            
+
             var currentTime = (new DateTime.now_utc ()).to_unix ();
             var message = new Soup.Message ("GET", "https://favicongrabber.com/api/grab/" + this.url.replace ("http://", "").replace ("https://", ""));
 
@@ -364,7 +364,7 @@ namespace App.Models {
                             if (iconObj.has_member ("sizes")) {
                                 string sizeString = iconObj.get_string_member ("sizes");
                                 int64 iconSize;
-                                
+
                                 if (!int64.try_parse (sizeString.substring (sizeString.index_of ("x") + 1), out iconSize)) {
                                     continue;
                                 }
@@ -412,7 +412,7 @@ namespace App.Models {
                     var file = File.new_for_path (_iconDir + name);
                     var outputStream = file.replace (null, false, FileCreateFlags.NONE);
                     var dataOutputStream = new DataOutputStream (outputStream);
-                    
+
                     long written = 0;
                     while (written < data.length) {
                         written += dataOutputStream.write (data[written:data.length]);

@@ -31,10 +31,10 @@ namespace App.Utils {
          *
          * Exemple:
          * > WidgetUtil.set_visible(widget, true)
-         * 
+         *
          * @param   {@code widget} widget - component
          * @param   {@code bool} visible - if true the component is displayed if false is not displayed
-         * @return  {@code void} 
+         * @return  {@code void}
          */
         public static void set_visible (Gtk.Widget widget, bool visible) {
             widget.no_show_all = !visible;

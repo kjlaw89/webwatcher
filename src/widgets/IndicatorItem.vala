@@ -39,7 +39,7 @@ namespace App.Widgets {
 
         public signal void changed ();
         public SiteModel Site { get { return _site; } }
-        
+
 
         /**
          * Constructs a new {@code Toolbar} object.

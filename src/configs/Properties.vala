@@ -20,7 +20,7 @@
 namespace App.Configs {
 
     /**
-     * The {@code Properties} class is responsible for defining all 
+     * The {@code Properties} class is responsible for defining all
      * the texts that are displayed in the application and must be translated.
      *
      * @since 1.0.0

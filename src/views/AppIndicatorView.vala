@@ -44,7 +44,7 @@ namespace App.Views {
         public void addSite (SiteModel site) {
             var item = new IndicatorItem (site);
             item.show_all ();
-            
+
             item.changed.connect (() => {
                 build_menu (true);
             });
@@ -79,7 +79,7 @@ namespace App.Views {
 
                 return;
             }*/
-            
+
             foreach (var child in this.get_children ()) {
                 this.remove (child);
             }
@@ -91,8 +91,8 @@ namespace App.Views {
 
                 this.add (entry.value);
             }
-            
-        
+
+
             var showItem = new Gtk.MenuItem.with_label (_("Show Web Watcher"));
             showItem.activate.connect (() => {
                 this.menu_event (null, IndicatorEvent.SHOW);

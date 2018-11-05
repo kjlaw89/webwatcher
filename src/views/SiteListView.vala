@@ -41,7 +41,7 @@ namespace App.Views {
         public SiteListView () {
             get_style_context ().add_class (Gtk.STYLE_CLASS_VIEW);
             get_style_context ().add_class (Granite.STYLE_CLASS_WELCOME);
-            
+
             this.content = new Gtk.Box (Gtk.Orientation.VERTICAL, 10);
 
             this.headerLabel = new Granite.HeaderLabel ("");
@@ -77,7 +77,7 @@ namespace App.Views {
 
             this.content.remove (item);
             this.update_header ();
-            
+
             Gtk.StyleContext.reset_widgets (get_style_context ().screen);
         }
 

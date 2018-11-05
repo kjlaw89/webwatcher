@@ -31,13 +31,13 @@ namespace App.Utils {
          *
          * Exemple:
          * > URLUtil.check_url_with_regex("https://elementary.io");
-         * 
-         * @param {@code string} url 
+         *
+         * @param {@code string} url
          */
         public static bool check_url_with_regex (string url) {
             try {
                 var regex = new Regex ("""(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?""");
-                
+
                 if (!regex.match (url)) {
                     return false;
                 }

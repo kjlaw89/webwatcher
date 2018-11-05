@@ -20,7 +20,7 @@
 namespace App.Configs {
 
     /**
-     * The {@code Settings} class is responsible for defining all 
+     * The {@code Settings} class is responsible for defining all
      * the texts that are displayed in the application and must be translated.
      *
      * @see Granite.Services.Settings
@@ -52,11 +52,11 @@ namespace App.Configs {
          * Should application start hidden
          */
         public bool hide_on_start { get; set; }
-       
+
         /**
-         * Constructs a new {@code Settings} object 
+         * Constructs a new {@code Settings} object
          * and sets the default exit folder.
-         * 
+         *
          * @see webwatcher.Utils.StringUtil#is_empty(string)
          * @see webwatcher.Constants
          */
@@ -66,7 +66,7 @@ namespace App.Configs {
 
         /**
          * Returns a single instance of this class.
-         * 
+         *
          * @return {@code Settings}
          */
         public static unowned Settings get_instance () {

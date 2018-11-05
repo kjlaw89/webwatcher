@@ -51,7 +51,7 @@ namespace App {
         /**
          * Create the window of this application through the class {@code Window} and show it. If user clicks
          * <quit> or press <control + q> the window will be destroyed.
-         * 
+         *
          * @return {@code void}
          */
         public override void activate () {
@@ -81,7 +81,7 @@ namespace App {
             if (x != -1 && y != -1) {
                 window.move (x, y);
             }
-            
+
             window.get_focus ();
             window.no_show_all = false;
             window.show_all ();

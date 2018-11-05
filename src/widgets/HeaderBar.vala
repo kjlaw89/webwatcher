@@ -37,7 +37,7 @@ namespace App.Widgets {
         public signal void site_event (SiteModel site, SiteEvent event);
         public signal void back ();
         public signal void filter (string filter);
-        
+
         private Gtk.Button         backButton;
         private Gtk.Box            buttonBox;
         private Views.SiteFormView formView;
@@ -46,7 +46,7 @@ namespace App.Widgets {
         private Gtk.Button         newButton;
         private Gtk.Popover        newPopover;
         private Gtk.SearchEntry    searchEntry;
-        
+
 
         /**
          * Constructs a new {@code HeaderBar} object.
@@ -61,7 +61,7 @@ namespace App.Widgets {
 
         /**
          * Add gear icon to open settings menu.
-         * 
+         *
          * @see menu_settings
          * @return {@code void}
          */
@@ -80,7 +80,7 @@ namespace App.Widgets {
                 this.hide_back ();
                 this.back ();
             });
-            
+
 
             this.searchEntry = new Gtk.SearchEntry ();
             this.searchEntry.placeholder_text = _("Filter sites…");
@@ -143,7 +143,7 @@ namespace App.Widgets {
             this.menu.show_all ();
 
             this.menuButton.popup = this.menu;
-            
+
             // Handle events
             settings.changed.connect (() => {
                 hideStartItem.active = settings.hide_on_start;

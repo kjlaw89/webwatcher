@@ -42,9 +42,9 @@ namespace App.Widgets {
         private Gtk.Image statusImage;
         private Gtk.Label titleLabel;
         private Gtk.Label urlLabel;
-        
+
         public SiteModel Site { get { return _site; } }
-        
+
         /**
          * Constructs a new {@code Toolbar} object.
          */
@@ -74,7 +74,7 @@ namespace App.Widgets {
 
             var textBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             textBox.add (titleLabel);
-            textBox.add (urlLabel);            
+            textBox.add (urlLabel);
 
             var statusGrid = new Gtk.Grid ();
             statusGrid.hexpand = true;

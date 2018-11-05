@@ -21,7 +21,7 @@
 namespace App.Database {
 
     /**
-     * The {@code Database} provides all of the basic functions 
+     * The {@code Database} provides all of the basic functions
      * needed to access and maintain the Sqlite database
      *
      * @see Sqlite.Database
@@ -105,7 +105,7 @@ namespace App.Database {
                     CREATE INDEX `active` ON `sites` (active);
                     CREATE INDEX `title` ON `sites` (title);
                     CREATE INDEX `updated_dt` ON `sites` (updated_dt);
-                    CREATE UNIQUE INDEX `url` ON `sites` (url);             
+                    CREATE UNIQUE INDEX `url` ON `sites` (url);
                 ";
 
                 this.Execute (sitesSQL);
@@ -164,7 +164,7 @@ namespace App.Database {
             Sqlite.Statement statement;
             var result = this.db.prepare_v2 (query, query.length, out statement);
             errorMsg = "";
-            
+
             if (result != Sqlite.OK) {
                 warning ("Error querying DB: %d - %s", this.db.errcode (), this.db.errmsg ());
                 errorMsg = this.db.errmsg ();
