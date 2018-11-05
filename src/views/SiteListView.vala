@@ -87,7 +87,7 @@ namespace App.Views {
             if (results != null && results >= 0) {
                 switch (results) {
                     case 0:
-                        text = _("No results...");
+                        text = _("No results…");
                         break;
                     case 1:
                         text = "1 " + _("result");

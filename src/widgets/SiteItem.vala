@@ -114,7 +114,7 @@ namespace App.Widgets {
         public void update () {
             var title = Site.title ?? "--";
             if (title.length > 35) {
-                title = title.substring (0, 35) + "...";
+                title = title.substring (0, 35) + "…";
             }
 
             this.titleLabel.label = title;

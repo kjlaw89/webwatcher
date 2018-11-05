@@ -83,7 +83,7 @@ namespace App.Widgets {
             
 
             this.searchEntry = new Gtk.SearchEntry ();
-            this.searchEntry.placeholder_text = _("Filter sites...");
+            this.searchEntry.placeholder_text = _("Filter sites…");
             this.searchEntry.search_changed.connect (() => {
                 this.filter (this.searchEntry.text);
             });

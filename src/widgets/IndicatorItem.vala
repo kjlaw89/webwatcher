@@ -59,7 +59,7 @@ namespace App.Widgets {
         private void update () {
             var label = Site.url + ((Site.title != null && Site.title.length > 0) ? " - " + Site.title : "");
             if (label.length > 45) {
-                label = label.substring (0, 45) + "...";
+                label = label.substring (0, 45) + "…";
             }
 
             if (this.previousLabel != null && this.previousLabel != this.label) {
