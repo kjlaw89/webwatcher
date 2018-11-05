@@ -152,7 +152,7 @@ namespace App.Models {
             // Update SQL
             if (id > 0) {
                 state = SiteEvent.UPDATED;
-                sql = "
+                sql = """
                     UPDATE `sites` SET
                         `url` = $URL,
                         `description` = $DESCRIPTION,
@@ -167,15 +167,15 @@ namespace App.Models {
                         `icon_updated_dt` = $ICON_UPDATED_DT
                     WHERE
                         `id` = $ID
-                ";
+                """;
             }
 
             // Insert SQL
             else {
-                sql = "
+                sql = """
                     INSERT INTO `sites` (`url`, `description`, `active`, `order`, `status`, `notify`)
                     VALUES ($URL, $DESCRIPTION, $ACTIVE, $ORDER, $STATUS, $NOTIFY)
-                ";
+                """;
             }
 
             var statement = this.db.Prepare (sql);

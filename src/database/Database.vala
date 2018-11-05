@@ -73,7 +73,7 @@ namespace App.Database {
 
             // Initial migration
             if (1 > oldVersion) {
-                var settingsSQL = "
+                var settingsSQL = """
                     CREATE TABLE `settings` (
                         id          INTEGER     PRIMARY KEY AUTOINCREMENT,
                         key         TEXT        NOT NULL,
@@ -82,11 +82,11 @@ namespace App.Database {
 
                     INSERT INTO `settings` (`key`, `value`) VALUES ('version', '1.0.0');
                     CREATE INDEX `key` ON `settings` (key);
-                ";
+                """;
 
                 this.Execute (settingsSQL);
 
-                var sitesSQL = "
+                var sitesSQL = """
                     CREATE TABLE `sites` (
                         id          INTEGER     PRIMARY KEY AUTOINCREMENT,
                         url         TEXT        NOT NULL,
@@ -106,11 +106,11 @@ namespace App.Database {
                     CREATE INDEX `title` ON `sites` (title);
                     CREATE INDEX `updated_dt` ON `sites` (updated_dt);
                     CREATE UNIQUE INDEX `url` ON `sites` (url);
-                ";
+                """;
 
                 this.Execute (sitesSQL);
 
-                var siteResultSQL = "
+                var siteResultSQL = """
                     CREATE TABLE `results` (
                         id            INTEGER     PRIMARY KEY AUTOINCREMENT,
                         site_id       INTEGER     NOT NULL,
@@ -124,7 +124,7 @@ namespace App.Database {
                     CREATE INDEX `site_id` ON `results` (site_id);
                     CREATE INDEX `status` ON `results` (status);
                     CREATE INDEX `created_dt` ON `results` (created_dt);
-                ";
+                """;
 
                 this.Execute (siteResultSQL);
             }

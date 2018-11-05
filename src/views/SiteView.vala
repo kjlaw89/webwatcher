@@ -173,7 +173,7 @@ namespace App.Views {
             var store = new Gtk.ListStore (4, typeof (string), typeof (string), typeof (string), typeof (string));
 
             var db = App.Database.DB.GetInstance ();
-            var sql = "
+            var sql = """
                 SELECT
                     created_dt,
                     response,
@@ -181,7 +181,7 @@ namespace App.Views {
                     status
                 FROM `results`
                 WHERE site_id = $SITE_ID AND created_dt >= $CREATED_DT
-                ORDER BY created_dt DESC";
+                ORDER BY created_dt DESC""";
 
             var statement = db.Prepare (sql);
             db.bind_int (statement, "$SITE_ID", Site.id);
