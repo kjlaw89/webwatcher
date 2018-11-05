@@ -242,72 +242,75 @@ namespace App.Models {
             }
 
             this.running = true;
+            try {
+                var titleRegex = new Regex ("""\<title[a-z \-]*\>(.+)\<\/title\>""", RegexCompileFlags.CASELESS);
+                var message = new Soup.Message ("GET", this.url);
+                var timer = new Timer ();
+                session.queue_message (message, (ses, response) => {
+                    timer.stop ();
 
-            var titleRegex = new Regex ("""\<title[a-z \-]*\>(.+)\<\/title\>""", RegexCompileFlags.CASELESS);
-            var message = new Soup.Message ("GET", this.url);
-            var timer = new Timer ();
-            session.queue_message (message, (ses, response) => {
-                timer.stop ();
+                    var currentTime = (new DateTime.now_utc ()).to_unix ();
+                    var data = (string) response.response_body.data ?? "";
+                    var statusCode = response.status_code;
 
-                var currentTime = (new DateTime.now_utc ()).to_unix ();
-                var data = (string) response.response_body.data ?? "";
-                var statusCode = response.status_code;
+                    // Timer is in seconds - multiple by 1000 to get MS, the cast to int to drop remainder
+                    this.response = (int)(timer.elapsed () * 1000);
 
-                // Timer is in seconds - multiple by 1000 to get MS, the cast to int to drop remainder
-                this.response = (int)(timer.elapsed () * 1000);
+                    // Update the status based on the status code value (200 is usually expected)
+                    if (statusCode >= 200 && statusCode < 300 && this.response < 30000) {
+                        if (this.status == "bad") {
+                            this.changed (this, SiteEvent.ONLINE);
+                        }
 
-                // Update the status based on the status code value (200 is usually expected)
-                if (statusCode >= 200 && statusCode < 300 && this.response < 30000) {
-                    if (this.status == "bad") {
-                        this.changed (this, SiteEvent.ONLINE);
+                        this.status = "good";
+                        this.failures = 0;
                     }
 
-                    this.status = "good";
-                    this.failures = 0;
-                }
+                    // Permanent redirect - update our link to it
+                    else if (statusCode == 308) {
+                        var headers = response.response_headers;
+                        this.url = headers.get_one ("Location");
+                    }
 
-                // Permanent redirect - update our link to it
-                else if (statusCode == 308) {
-                    var headers = response.response_headers;
-                    this.url = headers.get_one ("Location");
-                }
+                    else if (this.status == "bad") {}
 
-                else if (this.status == "bad") {}
+                    // 30 second timeout should be considered an offline situation
+                    else if (this.response >= 30000) {
+                        this.failures = 3;
+                    }
 
-                // 30 second timeout should be considered an offline situation
-                else if (this.response >= 30000) {
-                    this.failures = 3;
-                }
+                    // 300+ is redirect, 400+ are user/permission errors, 500+ are server errors
+                    else {
+                        this.status = "warning";
+                        this.failures++;
+                    }
 
-                // 300+ is redirect, 400+ are user/permission errors, 500+ are server errors
-                else {
-                    this.status = "warning";
-                    this.failures++;
-                }
+                    // After 5 failed attempts, display a notification if enabled
+                    if (this.failures >= 3 && this.status != "bad") {
+                        this.status = "bad";
+                        this.changed (this, SiteEvent.OFFLINE);
+                    }
 
-                // After 5 failed attempts, display a notification if enabled
-                if (this.failures >= 3 && this.status != "bad") {
-                    this.status = "bad";
-                    this.changed (this, SiteEvent.OFFLINE);
-                }
+                    // Attempt to parse out <title> tag
+                    MatchInfo match;
+                    if (titleRegex.match (data, 0, out match)) {
+                        this.title = App.Utils.StringUtil.html_entity_decode (match.fetch (1) ?? "").strip ();
+                    }
 
-                // Attempt to parse out <title> tag
-                MatchInfo match;
-                if (titleRegex.match (data, 0, out match)) {
-                    this.title = App.Utils.StringUtil.html_entity_decode (match.fetch (1) ?? "").strip ();
-                }
+                    new ResultModel.with_details (this.id, this.response, (int)statusCode, this.status);
 
-                new ResultModel.with_details (this.id, this.response, (int)statusCode, this.status);
+                    this.running = false;
+                    this.save ();
 
-                this.running = false;
-                this.save ();
-
-                // If everything is good and the last time we updated the icon was more than 5 minutes ago, fetch a new icon
-                if (this.status == "good" && currentTime - this.icon_updated_dt > 300) {
-                    this.fetching_icon = false;  // if it's still running after 5 minutes just let it run again
-                    this.fetch_icon ();
-                }
-            });
+                    // If everything is good and the last time we updated the icon was more than 5 minutes ago, fetch a new icon
+                    if (this.status == "good" && currentTime - this.icon_updated_dt > 300) {
+                        this.fetching_icon = false;  // if it's still running after 5 minutes just let it run again
+                        this.fetch_icon ();
+                    }
+                });
+            } catch (RegexError e) {
+                GLib.message ("Erro: %s", e.message);
+            }
         }
 
         public void fetch_icon () {
