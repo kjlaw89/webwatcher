@@ -1,0 +1,159 @@
+# Portuguese translations for com.github.kjlaw89.webwatcher package.
+# Copyright (C) 2018 THE com.github.kjlaw89.webwatcher'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.kjlaw89.webwatcher package.
+# Automatically generated, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.kjlaw89.webwatcher\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-05 01:45-0300\n"
+"PO-Revision-Date: 2018-11-05 01:15-0300\n"
+"Last-Translator: Cleiton Floss <cleitonfloss@gmail.com>\n"
+"Language-Team: none\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/configs/Constants.vala:31
+msgid "Monitor your sites for uptime and performance"
+msgstr "Monitore tempo de atividade e desempenho de seus sites"
+
+#: src/configs/Constants.vala:32
+msgid "Github Translators"
+msgstr "Tradutores"
+
+#: src/configs/Constants.vala:37
+#, fuzzy
+msgid "Website"
+msgstr "Site"
+
+#: src/controllers/AppController.vala:175
+msgid "Website is up"
+msgstr "O site está disponível"
+
+#: src/controllers/AppController.vala:175
+msgid "Website is down"
+msgstr "O site está indisponível"
+
+#: src/views/AppIndicatorView.vala:96
+msgid "Show Web Watcher"
+msgstr "Mostrar Web Watcher"
+
+#: src/views/AppIndicatorView.vala:101 src/widgets/HeaderBar.vala:133
+msgid "Quit"
+msgstr "Sair"
+
+#: src/views/SiteFormView.vala:49
+msgid "Site URL"
+msgstr "URL do site"
+
+#: src/views/SiteFormView.vala:51
+msgid "Must be a valid URL that starts with http or https"
+msgstr "É necessário ser um URL válido que começa com http ou https"
+
+#: src/views/SiteFormView.vala:55
+msgid "Site _URL"
+msgstr "_URL do site"
+
+#: src/views/SiteFormView.vala:63
+msgid "Alert on _change"
+msgstr "Alertar _mudança"
+
+#: src/views/SiteFormView.vala:71
+msgid "Monitoring _Enabled"
+msgstr "Monitoramento _Habilitado"
+
+#: src/views/SiteFormView.vala:75
+msgid "_Delete"
+msgstr "_Eliminar"
+
+#: src/views/SiteFormView.vala:80
+msgid "Update _Site"
+msgstr "Atualizar o _Site"
+
+#: src/views/SiteFormView.vala:80
+msgid "Monitor _Site"
+msgstr "Monitorar _Site"
+
+#: src/views/SiteListView.vala:90
+msgid "No results…"
+msgstr "Sem resultados…"
+
+#: src/views/SiteListView.vala:93
+msgid "result"
+msgstr "resultado"
+
+#: src/views/SiteListView.vala:96
+msgid "results"
+msgstr "resultados"
+
+#: src/views/SiteListView.vala:101
+msgid "Monitored Site"
+msgstr "Site Monitorado"
+
+#: src/views/SiteListView.vala:104
+msgid "Monitored Sites"
+msgstr "Sites Monitorados"
+
+#: src/views/SiteView.vala:108
+msgid "Time"
+msgstr "Hora"
+
+#: src/views/SiteView.vala:109
+msgid "Response"
+msgstr "Tempo de Resposta"
+
+#: src/views/SiteView.vala:110
+msgid "Status Code"
+msgstr "Código"
+
+#: src/views/SiteView.vala:111
+msgid "Status"
+msgstr "Estado"
+
+#: src/views/SiteView.vala:213
+msgid "Good"
+msgstr "Bom"
+
+#: src/views/SiteView.vala:216
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: src/views/SiteView.vala:219
+msgid "Offline"
+msgstr "Não disponível"
+
+#: src/views/WelcomeView.vala:33
+msgid "Start monitoring your sites"
+msgstr "Comece a monitorar seus sites"
+
+#: src/views/WelcomeView.vala:33
+msgid "Add a new site to begin"
+msgstr "Adicionar um novo site para começar"
+
+#: src/widgets/HeaderBar.vala:70
+msgid "_New"
+msgstr "_Novo"
+
+#: src/widgets/HeaderBar.vala:77
+msgid "_Back"
+msgstr "_Voltar"
+
+#: src/widgets/HeaderBar.vala:86
+msgid "Filter sites…"
+msgstr "Filtrar sites…"
+
+#: src/widgets/HeaderBar.vala:93
+msgid "Preferences"
+msgstr "Preferências"
+
+#: src/widgets/HeaderBar.vala:126
+msgid "Hide on Start"
+msgstr "Ocultar ao iniciar"
+
+#: src/widgets/HeaderBar.vala:129
+msgid "Hide on Close"
+msgstr "Ocultar ao fechar"
