@@ -21,7 +21,7 @@ namespace App.Models {
      *
      * @since 1.0.0
      */
-	public abstract class BaseModel {
+    public abstract class BaseModel {
 
         protected unowned App.Database.DB db { get { return App.Database.DB.GetInstance (); } }
 
@@ -29,6 +29,6 @@ namespace App.Models {
         public abstract bool load (Sqlite.Statement statement);
         public abstract bool save ();
         public abstract bool delete ();
-	}
+    }
 
 }

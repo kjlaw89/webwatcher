@@ -19,19 +19,19 @@ using App.Configs;
 
 namespace App.Views {
 
-	/**
+    /**
      * The {@code WelcomeView} class.
      *
      * @since 1.0.0
      */
-	public class WelcomeView : Gtk.Viewport {
+    public class WelcomeView : Gtk.Viewport {
 
-		/**
+        /**
          * Constructs a new {@code WelcomeView} object.
          */
-		public WelcomeView () {
+        public WelcomeView () {
             var welcome = new Granite.Widgets.Welcome (_("Start monitoring your sites"), _("Add a new site to begin"));
             this.add (welcome);
         }
-	}
+    }
 }

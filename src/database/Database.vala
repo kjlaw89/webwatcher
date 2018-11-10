@@ -21,7 +21,7 @@
 namespace App.Database {
 
     /**
-     * The {@code Database} provides all of the basic functions 
+     * The {@code Database} provides all of the basic functions
      * needed to access and maintain the Sqlite database
      *
      * @see Sqlite.Database
@@ -73,21 +73,21 @@ namespace App.Database {
 
             // Initial migration
             if (1 > oldVersion) {
-                var settingsSQL = "
-                    CREATE TABLE `settings` (
+                var settingsSQL = """
+                    CREATE TABLE IF NOT EXISTS `settings` (
                         id          INTEGER     PRIMARY KEY AUTOINCREMENT,
                         key         TEXT        NOT NULL,
                         value       TEXT        NOT NULL
                     );
 
                     INSERT INTO `settings` (`key`, `value`) VALUES ('version', '1.0.0');
-                    CREATE INDEX `key` ON `settings` (key);
-                ";
+                    CREATE INDEX IF NOT EXISTS `key` ON `settings` (key);
+                """;
 
                 this.Execute (settingsSQL);
 
-                var sitesSQL = "
-                    CREATE TABLE `sites` (
+                var sitesSQL = """
+                    CREATE TABLE IF NOT EXISTS `sites` (
                         id          INTEGER     PRIMARY KEY AUTOINCREMENT,
                         url         TEXT        NOT NULL,
                         description TEXT        NULL,
@@ -102,16 +102,16 @@ namespace App.Database {
                         icon_updated_dt INTEGER NULL
                     );
 
-                    CREATE INDEX `active` ON `sites` (active);
-                    CREATE INDEX `title` ON `sites` (title);
-                    CREATE INDEX `updated_dt` ON `sites` (updated_dt);
-                    CREATE UNIQUE INDEX `url` ON `sites` (url);             
-                ";
+                    CREATE INDEX IF NOT EXISTS `active` ON `sites` (active);
+                    CREATE INDEX IF NOT EXISTS `title` ON `sites` (title);
+                    CREATE INDEX IF NOT EXISTS `updated_dt` ON `sites` (updated_dt);
+                    CREATE UNIQUE INDEX IF NOT EXISTS `url` ON `sites` (url);
+                """;
 
                 this.Execute (sitesSQL);
 
-                var siteResultSQL = "
-                    CREATE TABLE `results` (
+                var siteResultSQL = """
+                    CREATE TABLE IF NOT EXISTS `results` (
                         id            INTEGER     PRIMARY KEY AUTOINCREMENT,
                         site_id       INTEGER     NOT NULL,
                         response      REAL        NOT NULL,
@@ -121,10 +121,10 @@ namespace App.Database {
                         created_dt    INTEGER     NOT NULL
                     );
 
-                    CREATE INDEX `site_id` ON `results` (site_id);
-                    CREATE INDEX `status` ON `results` (status);
-                    CREATE INDEX `created_dt` ON `results` (created_dt);
-                ";
+                    CREATE INDEX IF NOT EXISTS `site_id` ON `results` (site_id);
+                    CREATE INDEX IF NOT EXISTS `status` ON `results` (status);
+                    CREATE INDEX IF NOT EXISTS `created_dt` ON `results` (created_dt);
+                """;
 
                 this.Execute (siteResultSQL);
             }
@@ -164,7 +164,7 @@ namespace App.Database {
             Sqlite.Statement statement;
             var result = this.db.prepare_v2 (query, query.length, out statement);
             errorMsg = "";
-            
+
             if (result != Sqlite.OK) {
                 warning ("Error querying DB: %d - %s", this.db.errcode (), this.db.errmsg ());
                 errorMsg = this.db.errmsg ();

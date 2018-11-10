@@ -29,7 +29,7 @@ namespace App.Controllers {
      *
      * @since 1.0.0
      */
-	public class AppController {
+    public class AppController {
 
         private Gtk.Application        application;
         private AppView                appView;
@@ -47,7 +47,7 @@ namespace App.Controllers {
         /**
          * Constructs a new {@code AppController} object.
          */
-		public AppController (Gtk.ApplicationWindow window, Gtk.Application application) {
+        public AppController (Gtk.ApplicationWindow window, Gtk.Application application) {
             this.settings = App.Configs.Settings.get_instance ();
             this.window = window;
 
@@ -79,7 +79,7 @@ namespace App.Controllers {
             this.indicator.set_status (AppIndicator.IndicatorStatus.ACTIVE);
             this.indicatorView = new AppIndicatorView (indicator);
             this.indicatorView.menu_event.connect (this.indicator_event);
-            
+
             // Initialize our database and get a list of active locations
             this.database = DB.GetInstance ();
             var statement = this.database.Prepare ("SELECT id FROM `sites` ORDER BY `order` ASC");
@@ -140,7 +140,7 @@ namespace App.Controllers {
                 return true;
             });
         }
-        
+
         private void site_changed (SiteModel site, SiteEvent event) {
             switch (event) {
                 case SiteEvent.ADDED:
@@ -171,27 +171,27 @@ namespace App.Controllers {
                     if (!site.notify || !site.active) {
                         return;
                     }
-                    
+
                     var title = (event == SiteEvent.ONLINE) ? _("Website is up") : _("Website is down");
                     var body = (site.title != null) ? site.title + "\n" + site.url : site.url;
-                    
+
                     var notification = new Notification (title);
                     notification.set_body (body);
                     notification.set_priority (NotificationPriority.NORMAL);
-        
+
                     if (site.icon != null && site.icon != "") {
                         notification.set_icon (site.get_icon_image ().gicon_async);
                     }
-                    
+
                     application.send_notification (Constants.ID, notification);
-        
+
                     if (event == SiteEvent.ONLINE) {
                         this.offlineCount--;
                     }
                     else {
                         this.offlineCount++;
                     }
-        
+
                     this.launcherEntry.count_visible = this.offlineCount > 0;
                     this.launcherEntry.count = this.offlineCount;
                     break;
@@ -229,9 +229,9 @@ namespace App.Controllers {
 
             this.application.add_action (find_action);
             this.application.add_action (quit_action);
-            
-            this.application.add_accelerator ("<Control>f", "app.find", null);
-            this.application.add_accelerator ("<Control>q", "app.quit", null);
+
+            this.application.set_accels_for_action ("app.find", {"<Control>f"});
+            this.application.set_accels_for_action ("app.quit", {"<Control>q"});
         }
-	}
+    }
 }

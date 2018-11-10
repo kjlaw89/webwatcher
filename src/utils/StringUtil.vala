@@ -42,7 +42,7 @@ namespace App.Utils {
 
         /**
          * A empty string.
-         * 
+         *
          * Exemple:
          * > StringUtil.EMPTY
          */
@@ -50,7 +50,7 @@ namespace App.Utils {
 
         /**
          * Break line.
-         * 
+         *
          * Exemple:
          * > StringUtil.BREAK_LINE
          */
@@ -65,7 +65,7 @@ namespace App.Utils {
          * > StringUtil.is_empty(" ")        = false
          * > StringUtil.is_empty("test")     = false
          * > StringUtil.is_empty("  test  ") = false
-         * 
+         *
          * @param  {@code string} value - the string to check, not may be null
          * @return {@code bool} true - if the string is empty or null
          */
@@ -92,7 +92,7 @@ namespace App.Utils {
 
         /**
          * Checks if a string is empty (""), null or with whitespace.
-         * 
+         *
          * Exemple:
          * > StringUtil.is_blank(null)       = true
          * > StringUtil.is_blank("")         = true
@@ -119,7 +119,7 @@ namespace App.Utils {
 
         /**
          * Checks if a string is not empty (""), not null or has no whitespace.
-         * 
+         *
          * Exemple:
          * > StringUtil.is_not_blank(null)       = false
          * > StringUtil.is_not_blank("")         = false

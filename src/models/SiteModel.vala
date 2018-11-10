@@ -24,7 +24,7 @@ namespace App.Models {
      *
      * @since 1.0.0
      */
-	public class SiteModel : BaseModel {
+    public class SiteModel : BaseModel {
 
         private int failures = 0;
         private bool fetching_icon = false;
@@ -51,7 +51,7 @@ namespace App.Models {
         /**
          * Constructs a new {@code SiteModel} object.
          */
-		public SiteModel () {
+        public SiteModel () {
             session = new Soup.Session ();
             session.timeout = 60;
             session.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36";
@@ -127,7 +127,7 @@ namespace App.Models {
                             this.updated_dt = val.to_int64 ();
                             break;
                         case "icon_updated_dt":
-                            this.icon_updated_dt = val.to_int64();
+                            this.icon_updated_dt = val.to_int64 ();
                             break;
                     }
                 }
@@ -144,7 +144,7 @@ namespace App.Models {
 
             return loaded;
         }
-        
+
         public override bool save () {
             var sql = "";
             var state = SiteEvent.ADDED;
@@ -152,7 +152,7 @@ namespace App.Models {
             // Update SQL
             if (id > 0) {
                 state = SiteEvent.UPDATED;
-                sql = "
+                sql = """
                     UPDATE `sites` SET
                         `url` = $URL,
                         `description` = $DESCRIPTION,
@@ -167,15 +167,15 @@ namespace App.Models {
                         `icon_updated_dt` = $ICON_UPDATED_DT
                     WHERE
                         `id` = $ID
-                ";
+                """;
             }
 
             // Insert SQL
             else {
-                sql = "
+                sql = """
                     INSERT INTO `sites` (`url`, `description`, `active`, `order`, `status`, `notify`)
                     VALUES ($URL, $DESCRIPTION, $ACTIVE, $ORDER, $STATUS, $NOTIFY)
-                ";
+                """;
             }
 
             var statement = this.db.Prepare (sql);
@@ -203,7 +203,7 @@ namespace App.Models {
             if (state == SiteEvent.ADDED) {
                 this.id = (int)this.db.LastID ();
             }
-            
+
             this.update_icon ();
             this.changed (this, state);
             return true;
@@ -242,82 +242,85 @@ namespace App.Models {
             }
 
             this.running = true;
+            try {
+                var titleRegex = new Regex ("""\<title[a-z \-]*\>(.+)\<\/title\>""", RegexCompileFlags.CASELESS);
+                var message = new Soup.Message ("GET", this.url);
+                var timer = new Timer ();
+                session.queue_message (message, (ses, response) => {
+                    timer.stop ();
 
-            var titleRegex = new Regex ("""\<title[a-z \-]*\>(.+)\<\/title\>""", RegexCompileFlags.CASELESS);
-            var message = new Soup.Message ("GET", this.url);
-            var timer = new Timer ();
-            session.queue_message (message, (ses, response) => {
-                timer.stop ();
+                    var currentTime = (new DateTime.now_utc ()).to_unix ();
+                    var data = (string) response.response_body.data ?? "";
+                    var statusCode = response.status_code;
 
-                var currentTime = (new DateTime.now_utc ()).to_unix ();
-                var data = (string) response.response_body.data ?? "";
-                var statusCode = response.status_code;
+                    // Timer is in seconds - multiple by 1000 to get MS, the cast to int to drop remainder
+                    this.response = (int)(timer.elapsed () * 1000);
 
-                // Timer is in seconds - multiple by 1000 to get MS, the cast to int to drop remainder
-                this.response = (int)(timer.elapsed () * 1000);
+                    // Update the status based on the status code value (200 is usually expected)
+                    if (statusCode >= 200 && statusCode < 300 && this.response < 30000) {
+                        if (this.status == "bad") {
+                            this.changed (this, SiteEvent.ONLINE);
+                        }
 
-                // Update the status based on the status code value (200 is usually expected)
-                if (statusCode >= 200 && statusCode < 300 && this.response < 30000) {
-                    if (this.status == "bad") {
-                        this.changed (this, SiteEvent.ONLINE);
+                        this.status = "good";
+                        this.failures = 0;
                     }
-                    
-                    this.status = "good";
-                    this.failures = 0;
-                }
 
-                // Permanent redirect - update our link to it
-                else if (statusCode == 308) {
-                    var headers = response.response_headers;
-                    this.url = headers.get_one ("Location");
-                }
+                    // Permanent redirect - update our link to it
+                    else if (statusCode == 308) {
+                        var headers = response.response_headers;
+                        this.url = headers.get_one ("Location");
+                    }
 
-                else if (this.status == "bad") {}
+                    else if (this.status == "bad") {}
 
-                // 30 second timeout should be considered an offline situation
-                else if (this.response >= 30000) {
-                    this.failures = 3;
-                }
+                    // 30 second timeout should be considered an offline situation
+                    else if (this.response >= 30000) {
+                        this.failures = 3;
+                    }
 
-                // 300+ is redirect, 400+ are user/permission errors, 500+ are server errors
-                else {
-                    this.status = "warning";
-                    this.failures++;
-                }
+                    // 300+ is redirect, 400+ are user/permission errors, 500+ are server errors
+                    else {
+                        this.status = "warning";
+                        this.failures++;
+                    }
 
-                // After 5 failed attempts, display a notification if enabled
-                if (this.failures >= 3 && this.status != "bad") {
-                    this.status = "bad";
-                    this.changed (this, SiteEvent.OFFLINE);
-                }
+                    // After 5 failed attempts, display a notification if enabled
+                    if (this.failures >= 3 && this.status != "bad") {
+                        this.status = "bad";
+                        this.changed (this, SiteEvent.OFFLINE);
+                    }
 
-                // Attempt to parse out <title> tag
-                MatchInfo match;
-                if (titleRegex.match (data, 0, out match)) {
-                    this.title = App.Utils.StringUtil.html_entity_decode (match.fetch (1) ?? "").strip ();
-                }
+                    // Attempt to parse out <title> tag
+                    MatchInfo match;
+                    if (titleRegex.match (data, 0, out match)) {
+                        this.title = App.Utils.StringUtil.html_entity_decode (match.fetch (1) ?? "").strip ();
+                    }
 
-                new ResultModel.with_details (this.id, this.response, (int)statusCode, this.status);
+                    new ResultModel.with_details (this.id, this.response, (int)statusCode, this.status);
 
-                this.running = false;
-                this.save ();                
+                    this.running = false;
+                    this.save ();
 
-                // If everything is good and the last time we updated the icon was more than 5 minutes ago, fetch a new icon
-                if (this.status == "good" && currentTime - this.icon_updated_dt > 300) {
-                    this.fetching_icon = false;  // if it's still running after 5 minutes just let it run again
-                    this.fetch_icon ();
-                }
-            });
+                    // If everything is good and the last time we updated the icon was more than 5 minutes ago, fetch a new icon
+                    if (this.status == "good" && currentTime - this.icon_updated_dt > 300) {
+                        this.fetching_icon = false;  // if it's still running after 5 minutes just let it run again
+                        this.fetch_icon ();
+                    }
+                });
+            } catch (RegexError e) {
+                GLib.message ("Erro: %s", e.message);
+            }
         }
 
         public void fetch_icon () {
             if (this.fetching_icon) {
                 return;
             }
-            
+
             info ("Fetching updated icon for " + this.url);
             this.fetching_icon = true;
-            
+
             var currentTime = (new DateTime.now_utc ()).to_unix ();
             var message = new Soup.Message ("GET", "https://favicongrabber.com/api/grab/" + this.url.replace ("http://", "").replace ("https://", ""));
 
@@ -364,7 +367,7 @@ namespace App.Models {
                             if (iconObj.has_member ("sizes")) {
                                 string sizeString = iconObj.get_string_member ("sizes");
                                 int64 iconSize;
-                                
+
                                 if (!int64.try_parse (sizeString.substring (sizeString.index_of ("x") + 1), out iconSize)) {
                                     continue;
                                 }
@@ -412,7 +415,7 @@ namespace App.Models {
                     var file = File.new_for_path (_iconDir + name);
                     var outputStream = file.replace (null, false, FileCreateFlags.NONE);
                     var dataOutputStream = new DataOutputStream (outputStream);
-                    
+
                     long written = 0;
                     while (written < data.length) {
                         written += dataOutputStream.write (data[written:data.length]);
@@ -433,10 +436,10 @@ namespace App.Models {
         private void update_icon () {
             var iconFile = this.get_icon_file ();
             if (iconFile != null) {
-                this._iconImage.set_from_file_async (iconFile, 32, 32, true);
+                this._iconImage.set_from_file_async.begin (iconFile, 32, 32, true);
             }
             else {
-                this._iconImage.set_from_icon_name_async ("www", Gtk.IconSize.DND);
+                this._iconImage.set_from_icon_name_async.begin ("www", Gtk.IconSize.DND);
             }
         }
 
@@ -456,6 +459,6 @@ namespace App.Models {
 
             return null;
         }
-	}
+    }
 
 }

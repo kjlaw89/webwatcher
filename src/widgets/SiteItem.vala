@@ -42,9 +42,9 @@ namespace App.Widgets {
         private Gtk.Image statusImage;
         private Gtk.Label titleLabel;
         private Gtk.Label urlLabel;
-        
+
         public SiteModel Site { get { return _site; } }
-        
+
         /**
          * Constructs a new {@code Toolbar} object.
          */
@@ -67,20 +67,20 @@ namespace App.Widgets {
             this.nextImage.opacity = 0.3;
 
             var imageBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            imageBox.margin_left = 10;
+            imageBox.margin_start = 10;
             imageBox.valign = Gtk.Align.CENTER;
             imageBox.width_request = 28;
             imageBox.add (Site.get_icon_image ());
 
             var textBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             textBox.add (titleLabel);
-            textBox.add (urlLabel);            
+            textBox.add (urlLabel);
 
             var statusGrid = new Gtk.Grid ();
             statusGrid.hexpand = true;
             statusGrid.halign = Gtk.Align.END;
             statusGrid.valign = Gtk.Align.CENTER;
-            statusGrid.margin_right = 10;
+            statusGrid.margin_end = 10;
 
             var statusBox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             statusBox.width_request = 100;
@@ -114,7 +114,7 @@ namespace App.Widgets {
         public void update () {
             var title = Site.title ?? "--";
             if (title.length > 35) {
-                title = title.substring (0, 35) + "...";
+                title = title.substring (0, 35) + "…";
             }
 
             this.titleLabel.label = title;

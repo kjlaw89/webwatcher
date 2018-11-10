@@ -22,12 +22,12 @@ using App.Widgets;
 
 namespace App.Views {
 
-	/**
+    /**
      * The {@code SiteListView} class.
      *
      * @since 1.0.0
      */
-	public class SiteListView : Gtk.Viewport {
+    public class SiteListView : Gtk.Viewport {
 
         private Gtk.Label headerLabel;
         private Gtk.Box content;
@@ -35,17 +35,17 @@ namespace App.Views {
 
         public signal void site_selected (SiteModel site);
 
-		/**
+        /**
          * Constructs a new {@code SiteListView} object.
          */
         public SiteListView () {
             get_style_context ().add_class (Gtk.STYLE_CLASS_VIEW);
             get_style_context ().add_class (Granite.STYLE_CLASS_WELCOME);
-            
+
             this.content = new Gtk.Box (Gtk.Orientation.VERTICAL, 10);
 
             this.headerLabel = new Granite.HeaderLabel ("");
-            this.headerLabel.margin_left = 15;
+            this.headerLabel.margin_start = 15;
             this.headerLabel.get_style_context ().add_class ("h1");
 
             this.content.add (this.headerLabel);
@@ -77,7 +77,7 @@ namespace App.Views {
 
             this.content.remove (item);
             this.update_header ();
-            
+
             Gtk.StyleContext.reset_widgets (get_style_context ().screen);
         }
 
@@ -87,7 +87,7 @@ namespace App.Views {
             if (results != null && results >= 0) {
                 switch (results) {
                     case 0:
-                        text = _("No results...");
+                        text = _("No results…");
                         break;
                     case 1:
                         text = "1 " + _("result");
@@ -141,5 +141,5 @@ namespace App.Views {
             this.update_header (results);
             Gtk.StyleContext.reset_widgets (get_style_context ().screen);
         }
-	}
+    }
 }

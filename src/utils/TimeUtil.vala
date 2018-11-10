@@ -15,7 +15,7 @@
 * License along with this program; if not, write to the
 * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 * Boston, MA 02110-1301 USA
-* 
+*
 */
 
 namespace App.Utils {
@@ -26,14 +26,14 @@ namespace App.Utils {
      * @since 1.0.0
      */
     public class TimeUtil {
-     
+
         /**
-         * Responsible for getting the value of in string duration in 
+         * Responsible for getting the value of in string duration in
          * the format "00:00:00:00.00" and returning the duration in seconds.
          *
          * Exemple:
          * > TimeUtil.duration_in_seconds("00:01:14:36.00")  = 74
-         * 
+         *
          * @param  {@code string} duration
          * @return {@code int}
          */
@@ -44,7 +44,7 @@ namespace App.Utils {
             var hours = int.parse (time[0]);
             var mins = int.parse (time[1]);
             var secs = int.parse (time[2]);
-            
+
             return secs + (hours * 3600) + (mins * 60);
         }
     }

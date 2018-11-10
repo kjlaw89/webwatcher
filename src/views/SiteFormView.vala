@@ -21,16 +21,16 @@ using App.Widgets;
 
 namespace App.Views {
 
-	/**
+    /**
      * The {@code AppView} class.
      *
      * @since 1.0.0
      */
-	public class SiteFormView : Gtk.Box {
+    public class SiteFormView : Gtk.Box {
 
         public signal void site_event (SiteModel site, SiteEvent event);
 
-        
+
         private Gtk.Switch  activeSwitch;
         private Gtk.Switch  alertSwitch;
         private Gtk.Button  deleteButton;
@@ -38,10 +38,10 @@ namespace App.Views {
         private SiteModel   site;
         private Gtk.Entry   urlEntry;
 
-		/**
+        /**
          * Constructs a new {@code SiteFormView} object.
          */
-		public SiteFormView (SiteModel? site = null) {
+        public SiteFormView (SiteModel? site = null) {
             this.site = site;
 
             this.urlEntry = new Gtk.Entry ();
@@ -51,7 +51,7 @@ namespace App.Views {
             this.urlEntry.secondary_icon_tooltip_text = _("Must be a valid URL that starts with http or https");
             this.urlEntry.key_press_event.connect (this.handleInput);
             this.urlEntry.activate.connect (this.handleInputSubmit);
-            
+
             var urlLabel = new Gtk.Label.with_mnemonic (_("Site _URL") + ":");
             urlLabel.halign = Gtk.Align.END;
             urlLabel.mnemonic_widget = this.urlEntry;
@@ -88,7 +88,7 @@ namespace App.Views {
             grid.column_homogeneous = false;
             grid.column_spacing = 12;
             grid.row_spacing = 12;
-            
+
             grid.attach (urlLabel, 0, 0);
             grid.attach (urlEntry, 1, 0);
             grid.attach (alertLabel, 0, 1);
@@ -103,7 +103,7 @@ namespace App.Views {
             grid.attach (saveButton, 1, 3);
 
             grid.show_all ();
-            
+
             this.pack_start (grid, true, true, 0);
             this.margin = 12;
             this.orientation = Gtk.Orientation.VERTICAL;
@@ -116,7 +116,7 @@ namespace App.Views {
         }
 
         private bool handleInput (Gdk.EventKey key) {
-            
+
             this.saveButton.sensitive = this.isValid ();
             return false;
         }
@@ -135,7 +135,7 @@ namespace App.Views {
                 this.site.active = this.activeSwitch.active;
                 this.site.notify = this.alertSwitch.active;
                 this.site.url = this.urlEntry.text;
-                
+
                 if (this.site.save ()) {
                     site_event (this.site, SiteEvent.UPDATED);
                 }
@@ -156,7 +156,7 @@ namespace App.Views {
             this.site.delete ();
             site_event (this.site, SiteEvent.DELETED);
         }
-        
+
         public void clear () {
             if (this.site != null) {
                 this.activeSwitch.active = this.site.active;
@@ -171,8 +171,8 @@ namespace App.Views {
                 this.urlEntry.text = "";
                 this.urlEntry.has_focus = true;
             }
-            
+
             this.deleteButton.visible = (this.site != null) ? true : false;
         }
-	}
+    }
 }

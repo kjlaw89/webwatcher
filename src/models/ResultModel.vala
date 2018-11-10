@@ -24,7 +24,7 @@ namespace App.Models {
      *
      * @since 1.0.0
      */
-	public class ResultModel : BaseModel {
+    public class ResultModel : BaseModel {
 
         public int id { get; set; }
         public int site_id { get; set; }
@@ -39,7 +39,7 @@ namespace App.Models {
         /**
          * Constructs a new {@code ResultModel} object.
          */
-		public ResultModel () {}
+        public ResultModel () {}
 
         public ResultModel.with_details (int site, double response, int code, string status) {
             this.site_id = site;
@@ -95,7 +95,7 @@ namespace App.Models {
 
             return loaded;
         }
-        
+
         public override bool save () {
             var sql = "";
             var state = SiteEvent.ADDED;
@@ -103,7 +103,7 @@ namespace App.Models {
             // Update SQL
             if (id > 0) {
                 state = SiteEvent.UPDATED;
-                sql = "
+                sql = """
                     UPDATE `results` SET
                         `site_id` = $SITE_ID,
                         `response` = $RESPONSE,
@@ -113,15 +113,15 @@ namespace App.Models {
                         `created_dt` = $CREATED_DT
                     WHERE
                         `id` = $ID
-                ";
+                """;
             }
 
             // Insert SQL
             else {
-                sql = "
+                sql = """
                     INSERT INTO `results` (`site_id`, `response`, `response_code`, `status`, `offline`, `created_dt`)
                     VALUES ($SITE_ID, $RESPONSE, $RESPONSE_CODE, $STATUS, $OFFLINE, $CREATED_DT)
-                ";
+                """;
 
                 this.created_dt = (new DateTime.now_utc ()).to_unix ();
             }
@@ -144,13 +144,13 @@ namespace App.Models {
             if (state == SiteEvent.ADDED) {
                 this.id = (int)this.db.LastID ();
             }
-            
+
             return true;
         }
 
         public override bool delete () {
             return false;
         }
-	}
+    }
 
 }
