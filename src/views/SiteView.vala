@@ -105,10 +105,10 @@ namespace App.Views {
             var statusCell = new Gtk.CellRendererText ();
             statusCell.xalign = 0.9f;
 
-            this.treeView.insert_column_with_attributes (-1, "Time", cell, "text", 0);
-            this.treeView.insert_column_with_attributes (-1, "Response", cell, "text", 1);
-            this.treeView.insert_column_with_attributes (-1, "Status Code", cell, "text", 2);
-            this.treeView.insert_column_with_attributes (-1, "Status", statusCell, "text", 3);
+            this.treeView.insert_column_with_attributes (-1, _("Time"), cell, "text", 0);
+            this.treeView.insert_column_with_attributes (-1, _("Response"), cell, "text", 1);
+            this.treeView.insert_column_with_attributes (-1, _("Status Code"), cell, "text", 2);
+            this.treeView.insert_column_with_attributes (-1, _("Status"), statusCell, "text", 3);
 
             var column = this.treeView.get_column (0);
             column.min_width = 100;
@@ -210,13 +210,13 @@ namespace App.Views {
                         case 3:
                             switch (val.to_text ()) {
                                 case "good":
-                                    status = "Good";
+                                    status = _("Good");
                                     break;
                                 case "warning":
-                                    status = "Unknown";
+                                    status = _("Unknown");
                                     break;
                                 default:
-                                    status = "Offline";
+                                    status = _("Offline");
                                     break;
                             }
                             break;

@@ -1,0 +1,8 @@
+src/configs/Constants.vala
+src/controllers/AppController.vala
+src/views/AppIndicatorView.vala
+src/views/SiteFormView.vala
+src/views/SiteListView.vala
+src/views/SiteView.vala
+src/views/WelcomeView.vala
+src/widgets/HeaderBar.vala

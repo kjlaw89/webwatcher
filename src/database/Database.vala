@@ -52,7 +52,7 @@ namespace App.Database {
 
             int status = Sqlite.Database.open (dataDir + "/sites.db", out this.db);
             if (status != Sqlite.OK) {
-                error (_("Unable to open sites database: %d: %s\n"), this.db.errcode (), this.db.errmsg ());
+                error ("Unable to open sites database: %d: %s\n", this.db.errcode (), this.db.errmsg ());
             }
 
             Migrations ();
