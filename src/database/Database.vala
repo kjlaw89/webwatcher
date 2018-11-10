@@ -74,20 +74,20 @@ namespace App.Database {
             // Initial migration
             if (1 > oldVersion) {
                 var settingsSQL = """
-                    CREATE TABLE `settings` (
+                    CREATE TABLE IF NOT EXISTS `settings` (
                         id          INTEGER     PRIMARY KEY AUTOINCREMENT,
                         key         TEXT        NOT NULL,
                         value       TEXT        NOT NULL
                     );
 
                     INSERT INTO `settings` (`key`, `value`) VALUES ('version', '1.0.0');
-                    CREATE INDEX `key` ON `settings` (key);
+                    CREATE INDEX IF NOT EXISTS `key` ON `settings` (key);
                 """;
 
                 this.Execute (settingsSQL);
 
                 var sitesSQL = """
-                    CREATE TABLE `sites` (
+                    CREATE TABLE IF NOT EXISTS `sites` (
                         id          INTEGER     PRIMARY KEY AUTOINCREMENT,
                         url         TEXT        NOT NULL,
                         description TEXT        NULL,
@@ -102,16 +102,16 @@ namespace App.Database {
                         icon_updated_dt INTEGER NULL
                     );
 
-                    CREATE INDEX `active` ON `sites` (active);
-                    CREATE INDEX `title` ON `sites` (title);
-                    CREATE INDEX `updated_dt` ON `sites` (updated_dt);
-                    CREATE UNIQUE INDEX `url` ON `sites` (url);
+                    CREATE INDEX IF NOT EXISTS `active` ON `sites` (active);
+                    CREATE INDEX IF NOT EXISTS `title` ON `sites` (title);
+                    CREATE INDEX IF NOT EXISTS `updated_dt` ON `sites` (updated_dt);
+                    CREATE UNIQUE INDEX IF NOT EXISTS `url` ON `sites` (url);
                 """;
 
                 this.Execute (sitesSQL);
 
                 var siteResultSQL = """
-                    CREATE TABLE `results` (
+                    CREATE TABLE IF NOT EXISTS `results` (
                         id            INTEGER     PRIMARY KEY AUTOINCREMENT,
                         site_id       INTEGER     NOT NULL,
                         response      REAL        NOT NULL,
@@ -121,9 +121,9 @@ namespace App.Database {
                         created_dt    INTEGER     NOT NULL
                     );
 
-                    CREATE INDEX `site_id` ON `results` (site_id);
-                    CREATE INDEX `status` ON `results` (status);
-                    CREATE INDEX `created_dt` ON `results` (created_dt);
+                    CREATE INDEX IF NOT EXISTS `site_id` ON `results` (site_id);
+                    CREATE INDEX IF NOT EXISTS `status` ON `results` (status);
+                    CREATE INDEX IF NOT EXISTS `created_dt` ON `results` (created_dt);
                 """;
 
                 this.Execute (siteResultSQL);
